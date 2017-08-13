@@ -1,23 +1,15 @@
 fileFormatVersion: 2
-guid: b042289b1601c498484476d16f22cb1f
-timeCreated: 1502557613
+guid: 07b7ad3ec67b142459637c38134abd77
+timeCreated: 1502557374
 licenseType: Free
 ModelImporter:
   serializedVersion: 21
   fileIDToRecycleName:
-    100000: BranchSculpture
-    100002: Camera
-    100004: Lamp
-    100006: //RootNode
-    400000: BranchSculpture
-    400002: Camera
-    400004: Lamp
-    400006: //RootNode
-    2000000: Camera
-    4300000: BranchSculpture
-    9500000: //RootNode
-    10800000: Lamp
-    13700000: BranchSculpture
+    100000: //RootNode
+    400000: //RootNode
+    2300000: //RootNode
+    3300000: //RootNode
+    4300000: Cube.003
   materials:
     importMaterials: 1
     materialName: 0
@@ -87,7 +79,7 @@ ModelImporter:
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 2
+  animationType: 0
   humanoidOversampling: 1
   additionalBone: 0
   userData: 
