@@ -1,21 +1,29 @@
 fileFormatVersion: 2
-guid: 103612e5e1ff43a4e896c567a2cb3ae1
+guid: 171438d1319ee456190909e8f975b04a
+timeCreated: 1504569652
+licenseType: Free
 ModelImporter:
   serializedVersion: 21
   fileIDToRecycleName:
-    100000: //RootNode
-    400000: //RootNode
-    2300000: //RootNode
-    3300000: //RootNode
-    4300000: pSphere1
-    4300002: LowPolySphere
-    11100000: //RootNode
+    100000: Camera
+    100002: Icosphere
+    100004: Lamp
+    100006: //RootNode
+    400000: Camera
+    400002: Icosphere
+    400004: Lamp
+    400006: //RootNode
+    2000000: Camera
+    2300000: Icosphere
+    3300000: Icosphere
+    4300000: Icosphere
+    10800000: Lamp
   materials:
-    importMaterials: 0
-    materialName: 1
-    materialSearch: 2
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
   animations:
-    legacyGenerateAnimations: 0
+    legacyGenerateAnimations: 4
     bakeSimulation: 0
     resampleCurves: 1
     optimizeGameObjects: 0
@@ -40,13 +48,13 @@ ModelImporter:
     globalScale: 1
     meshCompression: 0
     addColliders: 0
-    importVisibility: 0
+    importVisibility: 1
     importBlendShapes: 1
-    importCameras: 0
-    importLights: 0
+    importCameras: 1
+    importLights: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
-    useFileUnits: 0
+    useFileUnits: 1
     optimizeMeshForGPU: 1
     keepQuads: 0
     weldVertices: 1
@@ -54,12 +62,12 @@ ModelImporter:
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
-    useFileScale: 0
+    useFileScale: 1
   tangentSpace:
-    normalSmoothAngle: 180
-    normalImportMode: 1
-    tangentImportMode: 4
-    normalCalculationMode: 0
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
   importAnimation: 1
   copyAvatar: 0
   humanDescription:
@@ -77,9 +85,9 @@ ModelImporter:
     rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
     hasTranslationDoF: 0
     hasExtraRoot: 0
-    skeletonHasParents: 0
+    skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 1
+  animationType: 0
   humanoidOversampling: 1
   additionalBone: 0
   userData: 
