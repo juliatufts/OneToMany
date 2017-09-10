@@ -1,49 +1,34 @@
 fileFormatVersion: 2
-guid: 047604d2d9cef4845ba29641e84d8796
-timeCreated: 1503855154
-licenseType: Pro
+guid: 81aedeb3ed4314399bb078436a087f3d
+timeCreated: 1504984714
+licenseType: Free
 ModelImporter:
   serializedVersion: 21
   fileIDToRecycleName:
-    100000: Layer_4
-    100002: Layer_4_MeshPart0
-    100004: Layer_4_MeshPart1
-    100006: Layer_4_MeshPart2
-    100008: Layer_4_MeshPart3
-    100010: Layer_4_MeshPart4
-    100012: Layer_4_MeshPart5
-    100014: Layer_4_MeshPart6
-    100016: //RootNode
-    400000: Layer_4
-    400002: Layer_4_MeshPart0
-    400004: Layer_4_MeshPart1
-    400006: Layer_4_MeshPart2
-    400008: Layer_4_MeshPart3
-    400010: Layer_4_MeshPart4
-    400012: Layer_4_MeshPart5
-    400014: Layer_4_MeshPart6
-    400016: //RootNode
+    100000: //RootNode
+    100002: Layer_4
+    100004: Layer_4_MeshPart0
+    100006: Layer_4_MeshPart1
+    100008: Layer_4_MeshPart2
+    100010: Layer_4_MeshPart3
+    400000: //RootNode
+    400002: Layer_4
+    400004: Layer_4_MeshPart0
+    400006: Layer_4_MeshPart1
+    400008: Layer_4_MeshPart2
+    400010: Layer_4_MeshPart3
     2300000: Layer_4_MeshPart0
     2300002: Layer_4_MeshPart1
     2300004: Layer_4_MeshPart2
     2300006: Layer_4_MeshPart3
-    2300008: Layer_4_MeshPart4
-    2300010: Layer_4_MeshPart5
-    2300012: Layer_4_MeshPart6
     3300000: Layer_4_MeshPart0
     3300002: Layer_4_MeshPart1
     3300004: Layer_4_MeshPart2
     3300006: Layer_4_MeshPart3
-    3300008: Layer_4_MeshPart4
-    3300010: Layer_4_MeshPart5
-    3300012: Layer_4_MeshPart6
     4300000: Layer_4_MeshPart0
     4300002: Layer_4_MeshPart1
     4300004: Layer_4_MeshPart2
     4300006: Layer_4_MeshPart3
-    4300008: Layer_4_MeshPart4
-    4300010: Layer_4_MeshPart5
-    4300012: Layer_4_MeshPart6
   materials:
     importMaterials: 1
     materialName: 0
