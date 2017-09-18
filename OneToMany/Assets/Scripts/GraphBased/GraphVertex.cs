@@ -5,12 +5,12 @@ using UnityEngine;
 public class GraphVertex {
 
 	public HashSet<int> meshIndices;
-	public HashSet<GraphVertex> neighbours;
+    public int dist; // for spanning tree
+    public bool visited; // for graph traversal
 
 	public GraphVertex(int meshIndex)
 	{
 		meshIndices = new HashSet<int>();
-		neighbours = new HashSet<GraphVertex>();
 		meshIndices.Add(meshIndex);
 	}
 
@@ -22,26 +22,6 @@ public class GraphVertex {
 	public void RemoveIndex(int i)
 	{
 		meshIndices.Remove(i);
-	}
-
-	public void AddNeighbour(GraphVertex g)
-	{
-		neighbours.Add(g);
-	}
-
-	public void RemoveNeighbour(GraphVertex g)
-	{
-		neighbours.Remove(g);
-	}
-
-	public void ListNeighbours()
-	{
-        var str = "neighbours: ";
-        foreach (var v in neighbours)
-		{
-			str += (v + " ");
-		}
-		Debug.Log(str);
 	}
 
     public void ListMeshIndices()
