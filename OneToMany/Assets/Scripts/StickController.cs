@@ -14,15 +14,25 @@ public class StickController : MonoBehaviour {
     Vector3 nextTarget;
     int counter = 0;
 
-	void Start ()
+	void Awake ()
     {
         originalPos = transform.position;
+	}
+
+    void OnEnable()
+    {
+        transform.position = originalPos;
         nextTarget = target.position;
         if (moveToTarget)
         {
             StartCoroutine(MoveToTarget(nextTarget));
         }
-	}
+    }
+
+    void OnDisable()
+    {
+        StopAllCoroutines();
+    }
 
     IEnumerator MoveToTarget(Vector3 targetPos)
     {
