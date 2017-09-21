@@ -37,7 +37,7 @@ public class GraphShaderController : MonoBehaviour {
 
         //// Vertex colors
         Color[] heatmap = new Color[4];
-        heatmap[0] = new Color(0f,   0f, 0f, 1f);   // black
+        heatmap[0] = new Color(0f,   1f, 1f, 1f);   // cyan
         heatmap[1] = new Color(0.3f, 0f, 0f, 1f);   // dark red
         heatmap[2] = new Color(0.6f, 0f, 0f, 1f);   // med red
         heatmap[3] = new Color(1f,   0f, 0f, 1f);   // bright red
@@ -48,7 +48,7 @@ public class GraphShaderController : MonoBehaviour {
             colors[i] = heatmap[0];
         }
 
-        var st = graph.GetSpanningTree(targetMeshVertexIndex, 5);
+        var st = graph.GetBFSTree(targetMeshVertexIndex, 5);
         foreach (var meshIndex in st.root.meshIndices)
         {
             colors[meshIndex] = heatmap[3];
@@ -57,51 +57,51 @@ public class GraphShaderController : MonoBehaviour {
         var neighbours = st.vertices.Where(v => v.dist == 1);
         Debug.Log("neighbours: " + neighbours.Count());
         foreach (var n in neighbours)
-		{
-			foreach (var meshIndex in n.meshIndices)
-			{
-				colors[meshIndex] = heatmap[2];
-			}
-		}
+        {
+            foreach (var meshIndex in n.meshIndices)
+            {
+                colors[meshIndex] = heatmap[2];
+            }
+        }
 
-		var secondNeighbours = st.vertices.Where(v => v.dist == 2);
+        var secondNeighbours = st.vertices.Where(v => v.dist == 2);
         Debug.Log("second neighbours: " + secondNeighbours.Count());
-		foreach (var n in secondNeighbours)
-		{
-			foreach (var meshIndex in n.meshIndices)
-			{
-				colors[meshIndex] = heatmap[1];
-			}
-		}
+        foreach (var n in secondNeighbours)
+        {
+            foreach (var meshIndex in n.meshIndices)
+            {
+                colors[meshIndex] = heatmap[1];
+            }
+        }
 
-   //     List<int> visited = new List<int>();
-   //     var gv0 = graph.meshToGraphVertexDict[targetMeshVertexIndex];
-   //     foreach (var meshIndex in gv0.meshIndices)
-   //     {
-   //         colors[meshIndex] = heatmap[3];
-   //         visited.Add(meshIndex);
-   //     }
+        //List<int> visited = new List<int>();
+        //var gv0 = graph.meshToGraphVertexDict[targetMeshVertexIndex];
+        //foreach (var meshIndex in gv0.meshIndices)
+        //{
+        //    colors[meshIndex] = heatmap[3];
+        //    visited.Add(meshIndex);
+        //}
 
-   //     foreach (var neighbour in graph.adjList[gv0])
-   //     {
-   //         foreach (var i in neighbour.meshIndices)
-   //         {
-			//	colors[i] = heatmap[2];
-			//	visited.Add(i);
-   //         }
+        //foreach (var neighbour in graph.adjList[gv0])
+        //{
+        //    foreach (var i in neighbour.meshIndices)
+        //    {
+        //        colors[i] = heatmap[2];
+        //        visited.Add(i);
+        //    }
 
-   //         foreach (var secondNeighbour in graph.adjList[neighbour])
-			//{
-   //             foreach (var i in secondNeighbour.meshIndices)
-   //             {
-			//		if (!visited.Contains(i))
-			//		{
-			//			colors[i] = heatmap[1];
-			//			visited.Add(i);
-			//		}
-   //             }
+        //    foreach (var secondNeighbour in graph.adjList[neighbour])
+        //    {
+        //        foreach (var i in secondNeighbour.meshIndices)
+        //        {
+        //            if (!visited.Contains(i))
+        //            {
+        //                colors[i] = heatmap[1];
+        //                visited.Add(i);
+        //            }
+        //        }
 
-			//}
+        //    }
         //}
         mesh.colors = colors;
 	}

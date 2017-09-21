@@ -50,7 +50,7 @@ public class Graph {
 		}
 
 		// Identify vertices at the same position
-		var epsilon = 0.01f;
+		var epsilon = 0.001f;
 		for (var i = 0; i < meshVertices.Length - 1; i++)
 		{
 			if (vertices[i] == null) { continue; }
@@ -67,72 +67,113 @@ public class Graph {
                     foreach (var v in adjList[v2])
                     {
                         adjList[v1].Add(v);
+                        adjList[v].Add(v1);
+                        adjList[v].Remove(v2);
                     }
-                    adjList[v1].Add(v2);
-                    adjList[v1].Remove(v1);
-                    v2 = v1;
+                    
+                    if (adjList[v1].Contains(v2))
+                    {
+                        adjList[v1].Remove(v2);
+                    }
 
+                    foreach (var index in v2.meshIndices)
+                    {
+                        v1.meshIndices.Add(index);
+                    }
+                    
+                    meshToGraphVertexDict[j] = v1;
                     vertices[j] = null;
-				}
+                    adjList[v2] = null; 
+                }
 			}
 		}
-		vertices.RemoveAll(x => x == null);
+        vertices.RemoveAll(x => x == null);
+        adjList = adjList.Where(x => x.Value != null).ToDictionary(p => p.Key, p => p.Value);
     }
 
-    public SpanningTree GetSpanningTree(int index, int maxDist)
+    public SpanningTree GetBFSTree(int index, int maxDist)
     {
         GraphVertex root = meshToGraphVertexDict[index];
         SpanningTree tree = new SpanningTree(root);
         tree.meshToGraphVertexDict = meshToGraphVertexDict;
 
-		foreach (var gv in vertices)
+        tree.vertices = vertices;
+        foreach (var gv in vertices)
 		{
 			gv.visited = false;
+            tree.adjList.Add(gv, new HashSet<GraphVertex>());
 		}
 
-        tree.adjList[root] = adjList[root];
-        HashSet<GraphVertex> withinReach = new HashSet<GraphVertex>(adjList[root]);
+        List<GraphVertex> withinReach = new List<GraphVertex>();
+        HashSet<GraphVertex> visited = new HashSet<GraphVertex>();
 
-        var reach = 1;
-        foreach (var v in withinReach)
-        {
-            tree.vertices.Add(v);
-            tree.adjList.Add(v, new HashSet<GraphVertex>());
-            tree.adjList[v].Add(root);
-
-			v.dist = reach;
-			v.visited = true;
-        }
-        reach++;
-
-
-        while (withinReach.Count > 0)
+        withinReach.Add(root);
+        visited.Add(root);
+        root.dist = 0;
+        while (visited.Count < vertices.Count)
 		{
-            var v = withinReach.First();
+            var v = withinReach[0];
+            withinReach.RemoveAt(0);
+
             foreach (var n in adjList[v])
             {
-                if (!n.visited)
+                if (!visited.Contains(n))
                 {
                     withinReach.Add(n);
-					tree.vertices.Add(n);
-                    tree.adjList.Add(n, new HashSet<GraphVertex>());
-                    n.dist = reach;
-                    n.visited = true;
+                    visited.Add(n);
+                    n.dist = v.dist + 1;
 
-					tree.adjList[v].Add(n);
+                    tree.adjList[v].Add(n);
                     tree.adjList[n].Add(v);
                 }
             }
-            withinReach.Remove(v);
-
-            reach++;
-            if (reach == maxDist) { break; }
         }
 
         return tree;
     }
 
-	public void ListNeighbours(int meshIndex)
+    public List<KeyValuePair<Vector3, Vector3>> FindMinSpanTreeEuclideanDistance(Vector3[] points)
+    {
+        float[] minCost = new float[points.Length];
+        int[] minPair = new int[points.Length];
+
+        for (int i = 0; i < points.Length; i++)
+        {
+            minCost[i] = Mathf.Infinity;
+            minPair[i] = -1;
+        }
+        List<int> pointIndexQueue = new List<int>();
+        for (int i = 0; i < points.Length; i++)
+        {
+            pointIndexQueue.Add(i);
+        }
+
+        while (pointIndexQueue.Count > 0)
+        {
+            pointIndexQueue = pointIndexQueue.OrderBy(x => minCost[x]).ToList();
+            int i = pointIndexQueue.First();
+            pointIndexQueue.RemoveAt(0);
+            foreach (int j in pointIndexQueue)
+            {
+                float dist = Vector3.Distance(points[i], points[j]);
+                if (dist < minCost[j])
+                {
+                    minCost[j] = dist;
+                    minPair[j] = i;
+                }
+            }
+        }
+
+        var pairs = new List<KeyValuePair<Vector3, Vector3>>();
+        for (int i = 0; i < points.Length; i++)
+        {
+            if (minPair[i] != -1)
+                pairs.Add(new KeyValuePair<Vector3, Vector3>(points[i], points[minPair[i]]));
+        }
+        return pairs;
+    }
+
+    public void ListNeighbours(int meshIndex)
 	{
 		var str = "neighbours: ";
         var gv = meshToGraphVertexDict[meshIndex];
