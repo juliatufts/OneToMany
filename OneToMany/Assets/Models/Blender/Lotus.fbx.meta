@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 647eabec09b7c497da6c30e10d3700a6
-timeCreated: 1506190884
+guid: 5c479c3e269de4ce3adedb8f9f92e26b
+timeCreated: 1506208520
 licenseType: Free
 ModelImporter:
   serializedVersion: 21
@@ -9,7 +9,7 @@ ModelImporter:
     400000: //RootNode
     2300000: //RootNode
     3300000: //RootNode
-    4300000: Lotus.006
+    4300000: Lotus.Holes
   materials:
     importMaterials: 1
     materialName: 0
