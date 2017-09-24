@@ -298,6 +298,9 @@ ModelImporter:
     100580: Lotus_Colliders_Parent
     100582: Lotus_Holes
     100584: Lotus_Solid
+    100586: Lotus_Colliders_ALL
+    100588: Lotus_Colliders_ALL_001
+    100590: Lotus_Holes_001
     400000: Coral
     400002: CutOut
     400004: CutOut_001
@@ -591,6 +594,9 @@ ModelImporter:
     400580: Lotus_Colliders_Parent
     400582: Lotus_Holes
     400584: Lotus_Solid
+    400586: Lotus_Colliders_ALL
+    400588: Lotus_Colliders_ALL_001
+    400590: Lotus_Holes_001
     2300000: Coral
     2300002: CutOut
     2300004: CutOut_001
@@ -880,6 +886,9 @@ ModelImporter:
     2300572: Lotus_Colliders_184
     2300574: Lotus_Holes
     2300576: Lotus_Solid
+    2300578: Lotus_Colliders_ALL
+    2300580: Lotus_Colliders_ALL_001
+    2300582: Lotus_Holes_001
     3300000: Coral
     3300002: CutOut
     3300004: CutOut_001
@@ -1169,6 +1178,9 @@ ModelImporter:
     3300572: Lotus_Colliders_184
     3300574: Lotus_Holes
     3300576: Lotus_Solid
+    3300578: Lotus_Colliders_ALL
+    3300580: Lotus_Colliders_ALL_001
+    3300582: Lotus_Holes_001
     4300000: Lotus_Colliders_092
     4300002: Lotus_Colliders_091
     4300004: Lotus_Colliders_090
@@ -1458,6 +1470,9 @@ ModelImporter:
     4300572: Lotus_Colliders_095
     4300574: Lotus_Colliders_094
     4300576: Lotus_Colliders
+    4300578: Lotus_Colliders_ALL
+    4300580: Lotus_Colliders_ALL_001
+    4300582: Lotus_Holes_001
     7400000: Default Take
     9500000: //RootNode
   materials:
