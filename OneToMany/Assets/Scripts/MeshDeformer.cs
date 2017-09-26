@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MeshDeformer : MonoBehaviour {
 
+    public float range = 0.5f;
     public float springForce = 20f;
     public float damping = 5f;
     float uniformScale = 1f;
@@ -52,7 +53,7 @@ public class MeshDeformer : MonoBehaviour {
     void AddForceToVertex(int i, Vector3 point, float force)
     {
         Vector3 pointToVertex = displacedVertices[i] - point;
-        pointToVertex *= uniformScale;
+        pointToVertex *= range * uniformScale;
         float attenuatedForce = force / (1f + pointToVertex.sqrMagnitude);
         float velocity = attenuatedForce * Time.deltaTime;
         vertexVelocities[i] += pointToVertex.normalized * velocity;
