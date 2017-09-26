@@ -37,9 +37,10 @@ public class CubeSpline : MonoBehaviour {
         Vector3 p = curve.Get(position);
         var go = GameObject.Instantiate(prefab, p, Quaternion.LookRotation(Random.onUnitSphere,Random.onUnitSphere));
 		go.transform.parent = transform;
+		go.transform.position = p;
         var rand = Random.value;
         go.transform.localScale = Vector3.one * (minSize + (maxSize-minSize)*sizeDistribution.Evaluate(rand));
-        var fc= go.AddComponent<FollowCurve>();
+        var fc= go.GetComponent<FollowCurveSteering>();
         fc.minDist = minDist;
 		fc.maxDist = maxDist*(1+2*(1-rand));
         fc.speed = speedBySize.Evaluate(rand);
