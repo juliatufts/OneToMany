@@ -37,6 +37,7 @@ public class FollowCurveSteering : MonoBehaviour {
 		if(currentU > 1){
             transform.SendMessageUpwards("CubeRemoved", gameObject);
            	GetComponent<Animator>().Play("cube_out");
-		}
+            Destroy(this);
+        }
 	}
 }
