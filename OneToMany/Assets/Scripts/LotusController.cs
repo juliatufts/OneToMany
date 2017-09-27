@@ -8,7 +8,7 @@ public class LotusController : MonoBehaviour {
 
     public Mesh originalLotusMesh;
     public GameObject lotusHolesRoot;
-    public Material lotusChildMaterial;
+    public Material lotusRimMaterial;
 
 	Renderer lotusRenderer;
 	Mesh lotusMesh;
@@ -50,7 +50,7 @@ public class LotusController : MonoBehaviour {
         newLotusMaterials[0] = lotusRenderer.sharedMaterial;
         for (int i = 1; i < lotusMesh.subMeshCount; i++)
         {
-            newLotusMaterials[i] = lotusChildMaterial;
+            newLotusMaterials[i] = lotusRimMaterial;
         }
         lotusRenderer.sharedMaterials = newLotusMaterials;
     }
@@ -118,7 +118,10 @@ public class LotusController : MonoBehaviour {
         }
 
         // Assign rim as new submesh
-        lotusMesh.SetTriangles(newTriangles.ToArray(), ++lotusMesh.subMeshCount - 1);
+        var submeshIndex = ++lotusMesh.subMeshCount - 1;
+        lotusMesh.SetTriangles(newTriangles.ToArray(), submeshIndex);
+        rimChild.GetComponent<LotusHoleController>().SetSubmeshIndex(submeshIndex);
+
         //Debug.Log("lotusMesh.subMeshCount: " + lotusMesh.subMeshCount + " tris: " + newTriangles.Count);
     }
 }
