@@ -12,7 +12,7 @@ public class Curve : MonoBehaviour {
 	public List<Transform> points = new List<Transform>();
 
 	public Vector3 Get(float u){
-		return transform.TransformPoint(animationCurve.Evaluate(u));
+		return animationCurve.Evaluate(u);
 	}
 
 	public Vector3 CrappyDerivitiveDirection(float u){
@@ -29,7 +29,7 @@ public class Curve : MonoBehaviour {
 	}
 
 	void OnDrawGizmos(){
-		Gizmos.matrix = transform.localToWorldMatrix;
+//		Gizmos.matrix = transform.localToWorldMatrix;
 		Vector3 last =  animationCurve.Evaluate(0);
 		for(int i = 0; i < numSubDivisions; i++){
 			float u = (float)(i+1) /numSubDivisions;
