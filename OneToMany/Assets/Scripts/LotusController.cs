@@ -12,11 +12,18 @@ public class LotusController : MonoBehaviour {
 
 	Renderer lotusRenderer;
 	Mesh lotusMesh;
+    MeshCollider lotusCollider;
     Vector3[] vertices;
     List<int> lotusTriangles;
 	Ray[] rays;
 	float maxRaycastDist = 1f;
     HashSet<int> newTriangleIndices;
+
+    void Start()
+    {
+        lotusMesh = originalLotusMesh;
+        DebugFaceNormals(0.005f, Color.cyan, Color.blue, 30f);
+    }
 
     public void CollidersToSubmeshes()
     {
@@ -64,10 +71,11 @@ public class LotusController : MonoBehaviour {
         AssetDatabase.CreateAsset(lotusMesh, path);
         AssetDatabase.SaveAssets();
 
-        // Reassign
+        // Assign fresh copy
         GetComponent<MeshFilter>().sharedMesh = lotusMesh;
         lotusRenderer = GetComponent<Renderer>();
         lotusRenderer.sharedMaterials = new Material[] { lotusRenderer.sharedMaterials[0] };
+        lotusCollider = GetComponent<MeshCollider>(); // note: this actually doesn't change, though maybe it should
         vertices = lotusMesh.vertices;
         newTriangleIndices = new HashSet<int>();
     }
@@ -78,42 +86,67 @@ public class LotusController : MonoBehaviour {
         lotusMesh.GetTriangles(lotusTriangles, 0);
         var newTriangles = new List<int>();
 
-        var extents = rimChild.GetComponent<MeshCollider>().bounds.extents;
-        var epsilon = 0.01f;
-        maxRaycastDist = Mathf.Sqrt(extents.x * extents.x +
-                                    extents.y * extents.y +
-                                    extents.z * extents.z);
-        maxRaycastDist += epsilon;
+        //var extents = rimChild.GetComponent<MeshCollider>().bounds.extents;
+        ////DebugBoundingBox(rimChild.GetComponent<MeshCollider>(), Color.cyan, 60f);
 
-        // Construct a shit ton of rays
-        rays = new Ray[lotusTriangles.Count / 3];
-        var rayIndex = 0;
-        for (var i = 0; i < lotusTriangles.Count; i += 3)
-        {
-            var p0 = transform.TransformPoint(vertices[lotusTriangles[i + 0]]);
-            var p1 = transform.TransformPoint(vertices[lotusTriangles[i + 1]]);
-            var p2 = transform.TransformPoint(vertices[lotusTriangles[i + 2]]);
-            var mid = (p0 + p1 + p2) / 3f;
-            rays[rayIndex++] = new Ray(rimChild.position, mid - rimChild.position);
-        }
+        //var epsilon = 0.05f;
+        //maxRaycastDist = Mathf.Sqrt(extents.x * extents.x +
+        //                            extents.y * extents.y +
+        //                            extents.z * extents.z);
+        //maxRaycastDist += epsilon;
 
-        // Cast those rays
-        RaycastHit hit;
-        foreach (var ray in rays)
+        //// Construct a shit ton of rays
+        //rays = new Ray[lotusTriangles.Count / 3];
+        //var rayIndex = 0;
+        //for (var i = 0; i < lotusTriangles.Count; i += 3)
+        //{
+        //    var p0 = transform.TransformPoint(vertices[lotusTriangles[i + 0]]);
+        //    var p1 = transform.TransformPoint(vertices[lotusTriangles[i + 1]]);
+        //    var p2 = transform.TransformPoint(vertices[lotusTriangles[i + 2]]);
+        //    var mid = (p0 + p1 + p2) / 3f;
+        //    rays[rayIndex++] = new Ray(rimChild.position, mid - rimChild.position);
+        //}
+
+        //// Cast those rays
+        //RaycastHit hit;
+        //foreach (var ray in rays)
+        //{
+        //    if (Physics.Raycast(ray, out hit, maxRaycastDist) && (hit.collider.gameObject == gameObject) &&
+        //        newTriangleIndices.Add(hit.triangleIndex * 3))
+        //    {
+        //        //Debug.DrawLine(ray.origin, ray.origin + maxRaycastDist * ray.direction, Color.magenta, 30f);
+
+        //        var t0 = lotusTriangles[hit.triangleIndex * 3 + 0];
+        //        var t1 = lotusTriangles[hit.triangleIndex * 3 + 1];
+        //        var t2 = lotusTriangles[hit.triangleIndex * 3 + 2];
+
+        //        newTriangles.Add(t0);
+        //        newTriangles.Add(t1);
+        //        newTriangles.Add(t2);
+        //    }
+        //}
+
+        // Try to use normals instead of raycast hits
+        var angleThreshold = 90f;
+        for (var i = 0; i < 3000; i += 3)
         {
-            // Try using Collider.Raycast instead maybe ?
-            if (Physics.Raycast(ray, out hit, maxRaycastDist) && (hit.collider.gameObject == gameObject) &&
-                newTriangleIndices.Add(hit.triangleIndex * 3))
+            var p0 = transform.TransformPoint(lotusMesh.vertices[lotusTriangles[i + 0]]);
+            var p1 = transform.TransformPoint(lotusMesh.vertices[lotusTriangles[i + 1]]);
+            var p2 = transform.TransformPoint(lotusMesh.vertices[lotusTriangles[i + 2]]);
+            var center = ((p0 + p1 + p2) / 3f);
+
+            var faceNormal = Vector3.Cross(p1 - p0, p2 - p0);
+            faceNormal.Normalize();
+
+            //var length = 0.1f;
+            //Debug.DrawLine(center, center + length * (rimChild.position - center), Color.magenta, 20f);
+            //Debug.DrawLine(center, center + length * faceNormal, Color.cyan, 20f);
+
+            if (Vector3.Angle(rimChild.position - center, faceNormal) <= angleThreshold)
             {
-                //Debug.DrawLine(ray.origin, ray.origin + maxRaycastDist * ray.direction, Color.magenta, 60f);
-
-                var t0 = lotusTriangles[hit.triangleIndex * 3 + 0];
-                var t1 = lotusTriangles[hit.triangleIndex * 3 + 1];
-                var t2 = lotusTriangles[hit.triangleIndex * 3 + 2];
-
-                newTriangles.Add(t0);
-                newTriangles.Add(t1);
-                newTriangles.Add(t2);
+                newTriangles.Add(lotusTriangles[i + 0]);
+                newTriangles.Add(lotusTriangles[i + 1]);
+                newTriangles.Add(lotusTriangles[i + 2]);
             }
         }
 
@@ -122,6 +155,58 @@ public class LotusController : MonoBehaviour {
         lotusMesh.SetTriangles(newTriangles.ToArray(), submeshIndex);
         rimChild.GetComponent<LotusHoleController>().SetSubmeshIndex(submeshIndex);
 
-        //Debug.Log("lotusMesh.subMeshCount: " + lotusMesh.subMeshCount + " tris: " + newTriangles.Count);
+        Debug.Log("lotusMesh.subMeshCount: " + lotusMesh.subMeshCount + " tris: " + newTriangles.Count);
+    }
+
+    void DebugBoundingBox(MeshCollider collider, Color color, float duration)
+    {
+        var center = collider.bounds.center;
+        var extents = collider.bounds.extents;
+        var p0 = center + new Vector3(extents.x, extents.y, extents.z);
+        var p1 = center + new Vector3(extents.x, extents.y, -extents.z);
+        var p2 = center + new Vector3(extents.x, -extents.y, extents.z);
+        var p3 = center + new Vector3(extents.x, -extents.y, -extents.z);
+        var p4 = center + new Vector3(-extents.x, extents.y, extents.z);
+        var p5 = center + new Vector3(-extents.x, extents.y, -extents.z);
+        var p6 = center + new Vector3(-extents.x, -extents.y, extents.z);
+        var p7 = center + new Vector3(-extents.x, -extents.y, -extents.z);
+
+        Debug.DrawLine(p0, p1, color, duration);
+        Debug.DrawLine(p0, p2, color, duration);
+        Debug.DrawLine(p1, p3, color, duration);
+        Debug.DrawLine(p2, p3, color, duration);
+
+        Debug.DrawLine(p4, p5, color, duration);
+        Debug.DrawLine(p4, p6, color, duration);
+        Debug.DrawLine(p5, p7, color, duration);
+        Debug.DrawLine(p6, p7, color, duration);
+
+        Debug.DrawLine(p0, p4, color, duration);
+        Debug.DrawLine(p1, p5, color, duration);
+        Debug.DrawLine(p2, p6, color, duration);
+        Debug.DrawLine(p3, p7, color, duration);
+    }
+
+    void DebugFaceNormals(float length, Color startColor, Color endColor, float duration)
+    {
+        Debug.Log("tris: " + lotusMesh.triangles.Length);
+        for (int i = 0; i < 3000; i+=3)
+        {
+            var t0 = lotusMesh.triangles[i + 0];
+            var t1 = lotusMesh.triangles[i + 1];
+            var t2 = lotusMesh.triangles[i + 2];
+
+            var p0 = transform.TransformPoint(lotusMesh.vertices[t0]);
+            var p1 = transform.TransformPoint(lotusMesh.vertices[t1]);
+            var p2 = transform.TransformPoint(lotusMesh.vertices[t2]);
+
+            var center = ((p0 + p1 + p2) / 3f);
+
+            var faceNormal = Vector3.Cross(p1 - p0, p2 - p0);
+            faceNormal.Normalize();
+
+            Debug.DrawLine(center, center + (length / 2f) * faceNormal, startColor, duration);
+            Debug.DrawLine(center + (length / 2f) * faceNormal, center + length * faceNormal, endColor, duration);
+        }
     }
 }

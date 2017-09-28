@@ -35,8 +35,11 @@ public class LotusHoleController : MonoBehaviour {
         holeMaterial.color = AdjustAlpha(holeMaterial.color, 0f);
 
         var lotusRenderer = lotus.gameObject.GetComponent<MeshRenderer>();
-        rimMaterial = lotusRenderer.materials[submeshIndex];
-        originalRimColor = rimMaterial.color;
+        if (lotusRenderer.materials.Length > submeshIndex)
+        {
+            rimMaterial = lotusRenderer.materials[submeshIndex];
+            originalRimColor = rimMaterial.color;
+        }
     }
 
     public void SetSubmeshIndex(int value)
