@@ -64,7 +64,6 @@ public class LotusHoleController : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log("HIT");
 		if (other.transform.CompareTag("GameController"))
 		{
             touching = true;

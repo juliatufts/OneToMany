@@ -19,12 +19,6 @@ public class LotusController : MonoBehaviour {
 	float maxRaycastDist = 1f;
     HashSet<int> newTriangleIndices;
 
-    void Start()
-    {
-        lotusMesh = originalLotusMesh;
-        DebugFaceNormals(0.005f, Color.cyan, Color.blue, 30f);
-    }
-
     public void CollidersToSubmeshes()
     {
         Reset();
@@ -165,7 +159,6 @@ public class LotusController : MonoBehaviour {
 
     void DebugFaceNormals(float length, Color startColor, Color endColor, float duration)
     {
-        Debug.Log("tris: " + lotusMesh.triangles.Length);
         for (int i = 0; i < 3000; i+=3)
         {
             var t0 = lotusMesh.triangles[i + 0];
