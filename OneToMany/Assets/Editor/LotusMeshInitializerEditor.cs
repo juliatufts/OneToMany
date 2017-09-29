@@ -3,27 +3,27 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(LotusController))]
-public class LotusControllerEditor : Editor {
+[CustomEditor(typeof(LotusMeshInitializer))]
+public class LotusMeshInitializerEditor : Editor {
 
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
-        LotusController lotusController = (LotusController) target;
+        LotusMeshInitializer lotusInitializer = (LotusMeshInitializer) target;
 
         if (GUILayout.Button("Create Submeshes"))
         {
-            lotusController.CollidersToSubmeshes();
+            lotusInitializer.CollidersToSubmeshes();
         }
 
         if (GUILayout.Button("Update Materials"))
         {
-            lotusController.UpdateMaterials();
+            lotusInitializer.UpdateMaterials();
         }
 
         if (GUILayout.Button("Reset"))
         {
-            lotusController.Reset();
+            lotusInitializer.Reset();
         }
     }
 }

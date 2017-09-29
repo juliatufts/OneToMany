@@ -4,19 +4,19 @@ using UnityEngine;
 using System.Linq;
 using UnityEditor;
 
-public class LotusController : MonoBehaviour {
-
+public class LotusMeshInitializer : MonoBehaviour
+{
     public Mesh originalLotusMesh;
     public GameObject lotusHolesRoot;
     public Material lotusRimMaterial;
 
-	Renderer lotusRenderer;
-	Mesh lotusMesh;
+    Renderer lotusRenderer;
+    Mesh lotusMesh;
     MeshCollider lotusCollider;
     Vector3[] vertices;
     List<int> lotusTriangles;
-	List<Ray> rays;
-	float maxRaycastDist = 1f;
+    List<Ray> rays;
+    float maxRaycastDist = 1f;
     HashSet<int> newTriangleIndices;
 
     public void CollidersToSubmeshes()
@@ -97,26 +97,26 @@ public class LotusController : MonoBehaviour {
             var p2 = transform.TransformPoint(vertices[lotusTriangles[i + 2]]);
             var center = ((p0 + p1 + p2) / 3f);
 
-			// Filter by distance
-			var dist = Vector3.Distance(center, rimChild.position);
+            // Filter by distance
+            var dist = Vector3.Distance(center, rimChild.position);
             if (dist <= maxRaycastDist)
             {
-				var faceNormal = Vector3.Cross(p1 - p0, p2 - p0);
-				faceNormal.Normalize();
+                var faceNormal = Vector3.Cross(p1 - p0, p2 - p0);
+                faceNormal.Normalize();
 
                 //var towardsRimChild = (rimChild.position - center).normalized;
                 //Debug.DrawLine(center, center + maxRaycastDist * towardsRimChild, Color.magenta, 20f);
-				//Debug.DrawLine(center, rimChild.position, Color.magenta, 20f);
-				//Debug.DrawLine(center, center + dist * faceNormal, Color.cyan, 20f);
+                //Debug.DrawLine(center, rimChild.position, Color.magenta, 20f);
+                //Debug.DrawLine(center, center + dist * faceNormal, Color.cyan, 20f);
 
                 // Filter by normal alignment
-				if (Vector3.Angle(rimChild.position - center, faceNormal) <= angleThreshold &&
+                if (Vector3.Angle(rimChild.position - center, faceNormal) <= angleThreshold &&
                     newTriangleIndices.Add(i))
-				{
-					newTriangles.Add(lotusTriangles[i + 0]);
-					newTriangles.Add(lotusTriangles[i + 1]);
-					newTriangles.Add(lotusTriangles[i + 2]);
-				}
+                {
+                    newTriangles.Add(lotusTriangles[i + 0]);
+                    newTriangles.Add(lotusTriangles[i + 1]);
+                    newTriangles.Add(lotusTriangles[i + 2]);
+                }
             }
         }
 
@@ -128,6 +128,7 @@ public class LotusController : MonoBehaviour {
         //Debug.Log("lotusMesh.subMeshCount: " + lotusMesh.subMeshCount + " tris: " + newTriangles.Count);
     }
 
+#region DebugIntenseMode
     void DebugBoundingBox(MeshCollider collider, Color color, float duration)
     {
         var center = collider.bounds.center;
@@ -159,7 +160,7 @@ public class LotusController : MonoBehaviour {
 
     void DebugFaceNormals(float length, Color startColor, Color endColor, float duration)
     {
-        for (int i = 0; i < 3000; i+=3)
+        for (int i = 0; i < 3000; i += 3)
         {
             var t0 = lotusMesh.triangles[i + 0];
             var t1 = lotusMesh.triangles[i + 1];
@@ -178,4 +179,5 @@ public class LotusController : MonoBehaviour {
             Debug.DrawLine(center + (length / 2f) * faceNormal, center + length * faceNormal, endColor, duration);
         }
     }
+#endregion
 }
