@@ -53,6 +53,7 @@ public class LotusController : MonoBehaviour {
 
     public void UpdateMaterials()
     {
+        lotusMesh = GetComponent<MeshFilter>().sharedMesh;
         Material[] newLotusMaterials = new Material[lotusMesh.subMeshCount];
         newLotusMaterials[0] = lotusRenderer.sharedMaterial;
         for (int i = 1; i < lotusMesh.subMeshCount; i++)
@@ -93,66 +94,6 @@ public class LotusController : MonoBehaviour {
         maxRaycastDist = extents.magnitude;
         maxRaycastDist += epsilon;
 
-        // Construct a shit ton of rays
-        //   RaycastHit hit;
-        //   rays = new List<Ray>();
-        //   for (var i = 0; i < lotusTriangles.Count; i += 3)
-        //   {
-        //       var p0 = transform.TransformPoint(vertices[lotusTriangles[i + 0]]);
-        //       var p1 = transform.TransformPoint(vertices[lotusTriangles[i + 1]]);
-        //       var p2 = transform.TransformPoint(vertices[lotusTriangles[i + 2]]);
-        //       var mid = (p0 + p1 + p2) / 3f;
-
-        //       // Filter by distance
-        //       var dist = Vector3.Distance(mid, rimChild.position);
-        //       if (dist <= maxRaycastDist)
-        //       {
-        //           //rays.Add(new Ray(rimChild.position, mid - rimChild.position));
-        //           var ray = new Ray(rimChild.position, mid - rimChild.position);
-        //           var didItHit = Physics.Raycast(ray, out hit, maxRaycastDist);
-        //           var diff = Mathf.Abs(dist - hit.distance) < 0.1f;
-        //           var sameTri = (hit.triangleIndex * 3) == i;
-
-        //           if (didItHit && diff && sameTri)
-        //           {
-        //               newTriangleIndices.Add(hit.triangleIndex * 3);
-
-        //var t0 = lotusTriangles[hit.triangleIndex * 3 + 0];
-        //var t1 = lotusTriangles[hit.triangleIndex * 3 + 1];
-        //var t2 = lotusTriangles[hit.triangleIndex * 3 + 2];
-
-        //newTriangles.Add(t0);
-        //newTriangles.Add(t1);
-        //newTriangles.Add(t2);
-        //        }
-        //        var col = Color.black;
-        //        col.r = didItHit ? 0f : 1f;
-        //        col.g = diff ? 1f : 0f;
-        //        col.b = sameTri ? 1f : 0f;
-        //        Debug.DrawLine(ray.origin, ray.origin + hit.distance * ray.direction, col, 30f);
-        //    }
-        //}
-
-        //   // Cast those rays
-        //   foreach (var ray in rays)
-        //   {
-        //       if (Physics.Raycast(ray, out hit, maxRaycastDist) && newTriangleIndices.Add(hit.triangleIndex * 3))
-        //       {
-        //           if (hit.collider.gameObject == gameObject)
-        //           {
-        ////Debug.DrawLine(ray.origin, ray.origin + hit.distance * ray.direction, Color.magenta, 30f);
-
-        //var t0 = lotusTriangles[hit.triangleIndex * 3 + 0];
-        //var t1 = lotusTriangles[hit.triangleIndex * 3 + 1];
-        //var t2 = lotusTriangles[hit.triangleIndex * 3 + 2];
-
-        //newTriangles.Add(t0);
-        //newTriangles.Add(t1);
-        //newTriangles.Add(t2);
-        //        }
-        //    }
-        //}
-
         // Try to use normals instead of raycast hits
         var angleThreshold = rimChild.GetComponent<LotusHoleController>().rimAngleThreshold;
         for (var i = 0; i < lotusTriangles.Count; i += 3)
@@ -190,7 +131,7 @@ public class LotusController : MonoBehaviour {
         lotusMesh.SetTriangles(newTriangles.ToArray(), submeshIndex);
         rimChild.GetComponent<LotusHoleController>().SetSubmeshIndex(submeshIndex);
 
-        Debug.Log("lotusMesh.subMeshCount: " + lotusMesh.subMeshCount + " tris: " + newTriangles.Count);
+        //Debug.Log("lotusMesh.subMeshCount: " + lotusMesh.subMeshCount + " tris: " + newTriangles.Count);
     }
 
     void DebugBoundingBox(MeshCollider collider, Color color, float duration)
