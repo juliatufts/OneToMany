@@ -15,7 +15,7 @@ public class LotusController : MonoBehaviour {
     MeshCollider lotusCollider;
     Vector3[] vertices;
     List<int> lotusTriangles;
-	Ray[] rays;
+	List<Ray> rays;
 	float maxRaycastDist = 1f;
     HashSet<int> newTriangleIndices;
 
@@ -86,67 +86,102 @@ public class LotusController : MonoBehaviour {
         lotusMesh.GetTriangles(lotusTriangles, 0);
         var newTriangles = new List<int>();
 
-        //var extents = rimChild.GetComponent<MeshCollider>().bounds.extents;
-        ////DebugBoundingBox(rimChild.GetComponent<MeshCollider>(), Color.cyan, 60f);
+        var extents = rimChild.GetComponent<MeshCollider>().bounds.extents;
+        //DebugBoundingBox(rimChild.GetComponent<MeshCollider>(), Color.cyan, 60f);
 
-        //var epsilon = 0.05f;
-        //maxRaycastDist = Mathf.Sqrt(extents.x * extents.x +
-        //                            extents.y * extents.y +
-        //                            extents.z * extents.z);
-        //maxRaycastDist += epsilon;
+        var epsilon = 0.01f;
+        maxRaycastDist = extents.magnitude;
+        maxRaycastDist += epsilon;
 
-        //// Construct a shit ton of rays
-        //rays = new Ray[lotusTriangles.Count / 3];
-        //var rayIndex = 0;
-        //for (var i = 0; i < lotusTriangles.Count; i += 3)
-        //{
-        //    var p0 = transform.TransformPoint(vertices[lotusTriangles[i + 0]]);
-        //    var p1 = transform.TransformPoint(vertices[lotusTriangles[i + 1]]);
-        //    var p2 = transform.TransformPoint(vertices[lotusTriangles[i + 2]]);
-        //    var mid = (p0 + p1 + p2) / 3f;
-        //    rays[rayIndex++] = new Ray(rimChild.position, mid - rimChild.position);
+        // Construct a shit ton of rays
+        //   RaycastHit hit;
+        //   rays = new List<Ray>();
+        //   for (var i = 0; i < lotusTriangles.Count; i += 3)
+        //   {
+        //       var p0 = transform.TransformPoint(vertices[lotusTriangles[i + 0]]);
+        //       var p1 = transform.TransformPoint(vertices[lotusTriangles[i + 1]]);
+        //       var p2 = transform.TransformPoint(vertices[lotusTriangles[i + 2]]);
+        //       var mid = (p0 + p1 + p2) / 3f;
+
+        //       // Filter by distance
+        //       var dist = Vector3.Distance(mid, rimChild.position);
+        //       if (dist <= maxRaycastDist)
+        //       {
+        //           //rays.Add(new Ray(rimChild.position, mid - rimChild.position));
+        //           var ray = new Ray(rimChild.position, mid - rimChild.position);
+        //           var didItHit = Physics.Raycast(ray, out hit, maxRaycastDist);
+        //           var diff = Mathf.Abs(dist - hit.distance) < 0.1f;
+        //           var sameTri = (hit.triangleIndex * 3) == i;
+
+        //           if (didItHit && diff && sameTri)
+        //           {
+        //               newTriangleIndices.Add(hit.triangleIndex * 3);
+
+        //var t0 = lotusTriangles[hit.triangleIndex * 3 + 0];
+        //var t1 = lotusTriangles[hit.triangleIndex * 3 + 1];
+        //var t2 = lotusTriangles[hit.triangleIndex * 3 + 2];
+
+        //newTriangles.Add(t0);
+        //newTriangles.Add(t1);
+        //newTriangles.Add(t2);
+        //        }
+        //        var col = Color.black;
+        //        col.r = didItHit ? 0f : 1f;
+        //        col.g = diff ? 1f : 0f;
+        //        col.b = sameTri ? 1f : 0f;
+        //        Debug.DrawLine(ray.origin, ray.origin + hit.distance * ray.direction, col, 30f);
+        //    }
         //}
 
-        //// Cast those rays
-        //RaycastHit hit;
-        //foreach (var ray in rays)
-        //{
-        //    if (Physics.Raycast(ray, out hit, maxRaycastDist) && (hit.collider.gameObject == gameObject) &&
-        //        newTriangleIndices.Add(hit.triangleIndex * 3))
-        //    {
-        //        //Debug.DrawLine(ray.origin, ray.origin + maxRaycastDist * ray.direction, Color.magenta, 30f);
+        //   // Cast those rays
+        //   foreach (var ray in rays)
+        //   {
+        //       if (Physics.Raycast(ray, out hit, maxRaycastDist) && newTriangleIndices.Add(hit.triangleIndex * 3))
+        //       {
+        //           if (hit.collider.gameObject == gameObject)
+        //           {
+        ////Debug.DrawLine(ray.origin, ray.origin + hit.distance * ray.direction, Color.magenta, 30f);
 
-        //        var t0 = lotusTriangles[hit.triangleIndex * 3 + 0];
-        //        var t1 = lotusTriangles[hit.triangleIndex * 3 + 1];
-        //        var t2 = lotusTriangles[hit.triangleIndex * 3 + 2];
+        //var t0 = lotusTriangles[hit.triangleIndex * 3 + 0];
+        //var t1 = lotusTriangles[hit.triangleIndex * 3 + 1];
+        //var t2 = lotusTriangles[hit.triangleIndex * 3 + 2];
 
-        //        newTriangles.Add(t0);
-        //        newTriangles.Add(t1);
-        //        newTriangles.Add(t2);
+        //newTriangles.Add(t0);
+        //newTriangles.Add(t1);
+        //newTriangles.Add(t2);
+        //        }
         //    }
         //}
 
         // Try to use normals instead of raycast hits
-        var angleThreshold = 90f;
-        for (var i = 0; i < 3000; i += 3)
+        var angleThreshold = rimChild.GetComponent<LotusHoleController>().rimAngleThreshold;
+        for (var i = 0; i < lotusTriangles.Count; i += 3)
         {
-            var p0 = transform.TransformPoint(lotusMesh.vertices[lotusTriangles[i + 0]]);
-            var p1 = transform.TransformPoint(lotusMesh.vertices[lotusTriangles[i + 1]]);
-            var p2 = transform.TransformPoint(lotusMesh.vertices[lotusTriangles[i + 2]]);
+            var p0 = transform.TransformPoint(vertices[lotusTriangles[i + 0]]);
+            var p1 = transform.TransformPoint(vertices[lotusTriangles[i + 1]]);
+            var p2 = transform.TransformPoint(vertices[lotusTriangles[i + 2]]);
             var center = ((p0 + p1 + p2) / 3f);
 
-            var faceNormal = Vector3.Cross(p1 - p0, p2 - p0);
-            faceNormal.Normalize();
-
-            //var length = 0.1f;
-            //Debug.DrawLine(center, center + length * (rimChild.position - center), Color.magenta, 20f);
-            //Debug.DrawLine(center, center + length * faceNormal, Color.cyan, 20f);
-
-            if (Vector3.Angle(rimChild.position - center, faceNormal) <= angleThreshold)
+			// Filter by distance
+			var dist = Vector3.Distance(center, rimChild.position);
+            if (dist <= maxRaycastDist)
             {
-                newTriangles.Add(lotusTriangles[i + 0]);
-                newTriangles.Add(lotusTriangles[i + 1]);
-                newTriangles.Add(lotusTriangles[i + 2]);
+				var faceNormal = Vector3.Cross(p1 - p0, p2 - p0);
+				faceNormal.Normalize();
+
+                //var towardsRimChild = (rimChild.position - center).normalized;
+                //Debug.DrawLine(center, center + maxRaycastDist * towardsRimChild, Color.magenta, 20f);
+				//Debug.DrawLine(center, rimChild.position, Color.magenta, 20f);
+				//Debug.DrawLine(center, center + dist * faceNormal, Color.cyan, 20f);
+
+                // Filter by normal alignment
+				if (Vector3.Angle(rimChild.position - center, faceNormal) <= angleThreshold &&
+                    newTriangleIndices.Add(i))
+				{
+					newTriangles.Add(lotusTriangles[i + 0]);
+					newTriangles.Add(lotusTriangles[i + 1]);
+					newTriangles.Add(lotusTriangles[i + 2]);
+				}
             }
         }
 

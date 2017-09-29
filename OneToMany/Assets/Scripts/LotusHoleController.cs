@@ -7,6 +7,7 @@ public class LotusHoleController : MonoBehaviour {
     public LotusController lotus;
     public GameObject holeEffectPrefab;
     public AnimationCurve onTouchCurve;
+    public float rimAngleThreshold = 80f;
 
     [Tooltip("Time since last touch must be above this in order for next touch to have OnTouch event fired.")]
     public float onTouchCoolDownThreshold = 1f;
