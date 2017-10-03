@@ -8,9 +8,7 @@ using UnityEngine;
 public class LotusHoleController : MonoBehaviour {
 
     public LotusController lotus;
-
     public AnimationCurve onTouchRampUpCurve;
-    public AnimationCurve onTouchRampDownCurve;
 
 	[Tooltip("Time since last touch must be above this in order for next touch to have OnTouch event fired.")]
 	public float onTouchCoolDownThreshold = 1f;

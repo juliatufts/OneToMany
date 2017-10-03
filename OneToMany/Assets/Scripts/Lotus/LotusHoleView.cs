@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class LotusHoleView : MonoBehaviour {
 
-    public GameObject onFirstTouchEffectPrefab;
     public float minDensity = 0f;
     public float maxDensity = 4f;
+    public Color holeColor;
     LotusHoleController lotus;
 
     private float maxHoleAlpha = 1f;
@@ -35,7 +35,7 @@ public class LotusHoleView : MonoBehaviour {
         originalHoleColor = holeMaterial.color;
 		maxHoleAlpha = holeMaterial.color.a;
 
-		holeMaterial.color = AdjustAlpha(holeMaterial.color, 0f);
+		holeMaterial.color = AdjustAlpha(holeColor, 0f);
         holeMaterial.SetFloat("_Density", minDensity);
 
 		// Check if rim materials have been generated
@@ -57,8 +57,6 @@ public class LotusHoleView : MonoBehaviour {
     void OnStartTouch()
     {
         //TODO: sound
-        Debug.Log("VVVVVV");
-        Instantiate(onFirstTouchEffectPrefab, transform.position, transform.rotation);
     }
 
 	Color AdjustAlpha(Color c, float a)

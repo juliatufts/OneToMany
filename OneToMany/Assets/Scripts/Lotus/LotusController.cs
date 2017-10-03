@@ -5,7 +5,7 @@ using UnityEngine;
 public class LotusController : MonoBehaviour {
 
     public Transform LotusCollidersRoot;
-    public Color[] palette;
+    public Gradient colorGradient;
     public float timeScale = 0.1f;
 
 	[HideInInspector]
@@ -15,16 +15,25 @@ public class LotusController : MonoBehaviour {
 	public float timeGazed;
 
     int numHoles;
+    List<Color> fullPalette;
 
-    void Start()
+    void Awake()
     {
         // If palette isn't big enough, fill it out
         numHoles = LotusCollidersRoot.childCount;
         var newPalette = new List<Color>();
         for (int i = 0; i < numHoles; i++)
         {
-            var randomIndex = Random.Range(0, palette.Length - 1);
-            newPalette.Add(palette[randomIndex]);
+            var randomKey = Random.Range(0f, 1f);
+            newPalette.Add(colorGradient.Evaluate(randomKey));
+        }
+        fullPalette = newPalette;
+
+        // Assign to Lotus holes
+        var lotusChildren = LotusCollidersRoot.GetComponentsInChildren<LotusHoleView>();
+        for (int i = 0; i < lotusChildren.Length; i++)
+        {
+            lotusChildren[i].holeColor = fullPalette[i];
         }
     }
 
