@@ -15,8 +15,8 @@ public class LotusStatsDisplay : MonoBehaviour {
 	
 	void Update ()
     {
-        var str = "LOTUS\nTouch: " + lotus.timeTouched;
-        str += "\nGaze: " + lotus.timeGazed;
+        var str = "Lotus Touch: " + lotus.timeTouched;
+        str += "\nLotus Gaze: " + lotus.timeGazed;
         text.text = str;
 	}
 }
