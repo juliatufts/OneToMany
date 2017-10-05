@@ -9,6 +9,10 @@ public class LotusHoleController : MonoBehaviour {
 
     public LotusController lotus;
     public AnimationCurve onTouchRampUpCurve;
+    [Range(-2400, 2400)]
+    public float pitch;
+    public AK.Wwise.RTPC pitchRTPC;
+    public AK.Wwise.Event onTouch;
 
 	[Tooltip("Time since last touch must be above this in order for next touch to have OnTouch event fired.")]
 	public float onTouchCoolDownThreshold = 1f;
@@ -40,6 +44,7 @@ public class LotusHoleController : MonoBehaviour {
 
     void Start()
     {
+        pitch = Random.Range(-2400, 2400);
         timeSinceLastTouch = onTouchCoolDownThreshold;
     }
 
@@ -67,7 +72,9 @@ public class LotusHoleController : MonoBehaviour {
 			{
 				if (onStartTouch != null)
 				{
-					onStartTouch();
+                    pitchRTPC.SetValue(gameObject, pitch);
+                    onTouch.Post(gameObject);
+                    onStartTouch();
 				}
 			}
 
