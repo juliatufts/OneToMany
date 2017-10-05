@@ -29,7 +29,6 @@ public class Curve : MonoBehaviour {
 	}
 
 	void OnDrawGizmos(){
-//		Gizmos.matrix = transform.localToWorldMatrix;
 		Vector3 last =  animationCurve.Evaluate(0);
 		for(int i = 0; i < numSubDivisions; i++){
 			float u = (float)(i+1) /numSubDivisions;
@@ -37,6 +36,10 @@ public class Curve : MonoBehaviour {
 			Gizmos.DrawLine(last, next);
 			last = next;
 		}
+	}
+
+	void Awake(){
+		RebuildCurve();
 	}
 
 	void Update(){

@@ -11,11 +11,16 @@ public class FlashOnConnect : MonoBehaviour {
 	[ColorUsageAttribute(false,true,0,2,0.125f,3)]
 	public Color color;
 
-	IEnumerator Flash(AnimationCurve flashCurve, Color color){
+	public void Flash(AnimationCurve flashCurve, Color color, float time){
+		StopCoroutine("Flash_Coroutine");
+		StartCoroutine(Flash_Coroutine(flashCurve, color, time));
+	}
+
+	IEnumerator Flash_Coroutine(AnimationCurve flashCurve, Color color, float time){
 		var renderer = GetComponent<Renderer>();
 		float startTime = Time.time;
-		while(Time.time-startTime < flashTime){
-			float u = (Time.time-startTime)/flashTime;
+		while(Time.time-startTime < time){
+			float u = (Time.time-startTime)/time;
 			renderer.material.SetColor("_EmissionColor",flashCurve.Evaluate(u) * color);
 			yield return null;
 		}
@@ -23,10 +28,8 @@ public class FlashOnConnect : MonoBehaviour {
 	}
 
 	void OnCollisionEnter(Collision collision) {
-//		Debug.Log("Collision Detected");
 		if(collision.gameObject.layer != LayerMask.NameToLayer(cubeLayer)){
-//			Debug.Log("Starting Flash");
-			StartCoroutine(Flash(flashCurve, color));
+			Flash(flashCurve, color, flashTime);
 		}
 	}
 }
