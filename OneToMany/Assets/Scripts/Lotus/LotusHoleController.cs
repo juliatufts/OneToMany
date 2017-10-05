@@ -90,7 +90,7 @@ public class LotusHoleController : MonoBehaviour {
         {
             timeThisTouch += Time.deltaTime;
             totalTimeTouched += Time.deltaTime;
-            lotus.BankTouchTime(Time.deltaTime);
+            TouchGazeManager.Instance.BankLotusTouchTime(Time.deltaTime);
         }
     }
 
