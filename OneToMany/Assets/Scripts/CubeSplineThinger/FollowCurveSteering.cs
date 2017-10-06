@@ -14,13 +14,16 @@ public class FollowCurveSteering : MonoBehaviour {
 	public float maxSpeed = 1f;
 	public float maxForce = 5f;
 
+	public AnimationCurve flashInCurve;
+	public AnimationCurve flashOutCurve;
+
 	// Use this for initialization
 	void Start () {
-		Vector3 start = curveToFollow.animationCurve.Evaluate(0);
-		Vector3 startD = curveToFollow.CrappyDerivitiveDirection(0);
+		Vector3 start = curveToFollow.Get(currentU);
+		Vector3 startD = curveToFollow.CrappyDerivitiveDirection(currentU);
 		offset = Quaternion.AngleAxis(Random.Range(0.0f,360.0f), startD) * Vector3.up * Random.Range(minDist, maxDist);
 		transform.position = start + offset;
-		
+		GetComponent<FlashOnConnect>().Flash(flashInCurve,Color.white,1.5f);
 	}
 
 
@@ -37,6 +40,7 @@ public class FollowCurveSteering : MonoBehaviour {
 		if(currentU > 1){
             transform.SendMessageUpwards("CubeRemoved", gameObject);
            	GetComponent<Animator>().Play("cube_out");
+			GetComponent<FlashOnConnect>().Flash(flashInCurve,Color.white,2.0f);
             Destroy(this);
         }
 	}
