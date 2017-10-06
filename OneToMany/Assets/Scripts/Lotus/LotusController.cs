@@ -8,12 +8,6 @@ public class LotusController : MonoBehaviour {
     public Gradient colorGradient;
     public float timeScale = 0.1f;
 
-	[HideInInspector]
-	public float timeTouched;
-
-	[HideInInspector]
-	public float timeGazed;
-
     int numHoles;
     List<Color> fullPalette;
 
@@ -36,14 +30,4 @@ public class LotusController : MonoBehaviour {
             lotusChildren[i].holeColor = fullPalette[i];
         }
     }
-
-    public void BankTouchTime(float time)
-    {
-        timeTouched += time;
-    }
-
-	public void BankGazeTime(float time)
-	{
-		timeGazed += time;
-	}
 }
