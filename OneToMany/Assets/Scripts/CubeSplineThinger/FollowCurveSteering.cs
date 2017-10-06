@@ -23,7 +23,7 @@ public class FollowCurveSteering : MonoBehaviour {
 		Vector3 startD = curveToFollow.CrappyDerivitiveDirection(currentU);
 		offset = Quaternion.AngleAxis(Random.Range(0.0f,360.0f), startD) * Vector3.up * Random.Range(minDist, maxDist);
 		transform.position = start + offset;
-		GetComponent<FlashOnConnect>().Flash(flashInCurve,Color.white,3.0f);
+		GetComponent<FlashOnConnect>().Flash(flashInCurve,Color.white,1.5f);
 	}
 
 
