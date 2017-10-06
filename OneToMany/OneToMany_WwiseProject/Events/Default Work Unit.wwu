@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{017F7DBC-B1D9-44D7-B7AF-513DFAA4978D}" SchemaVersion="80">
+	<Events>
+		<WorkUnit Name="Default Work Unit" ID="{017F7DBC-B1D9-44D7-B7AF-513DFAA4978D}" PersistMode="Standalone">
+			<ChildrenList>
+				<Event Name="LotusHoleTouch" ID="{B7FFD75E-73FC-4132-A02B-66E26EE2BB1E}">
+					<ChildrenList>
+						<Action Name="" ID="{C4ACAE12-7C12-4B57-B540-97E274A0B19C}" ShortID="36877627">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="1"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="ding" ID="{64402160-3430-4CCB-97D7-E93F9D32AD9E}" WorkUnitID="{ED47D36C-4990-4BF8-9DA7-902D95EB178F}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+			</ChildrenList>
+		</WorkUnit>
+	</Events>
+</WwiseDocument>
