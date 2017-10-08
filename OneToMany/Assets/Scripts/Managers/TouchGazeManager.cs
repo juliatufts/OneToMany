@@ -5,6 +5,8 @@ using UnityEngine;
 public class TouchGazeManager : MonoBehaviour {
 
     public static TouchGazeManager Instance;
+
+    public Camera ViveCamera;
     const string lotusLayer = "Sculpt0";
     const string cubesLayer = "Sculpt1";
 
@@ -61,7 +63,7 @@ public class TouchGazeManager : MonoBehaviour {
 	void Update ()
     {
         // Update Gaze counts
-        var ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
+        var ray = new Ray(ViveCamera.transform.position, ViveCamera.transform.forward);
         RaycastHit hit;
 
         if (Physics.Raycast(ray, out hit))

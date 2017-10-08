@@ -3,6 +3,7 @@
 	Properties
 	{
 		_MainTex ("Texture", 2D) = "white" {}
+		_Touch ("Touch", float) = 0.0
 	}
 	SubShader
 	{
@@ -18,6 +19,8 @@
 			#pragma multi_compile_fog
 			
 			#include "UnityCG.cginc"
+			#define PI 3.14159265359
+			#define count 3.0
 
 			struct appdata
 			{
@@ -49,20 +52,24 @@
 				// sample the texture
 				fixed4 col = tex2D(_MainTex, i.uv);
 
-                // sample ahead and blend
-                float inc = 0.02 * _SinTime.w;
-                fixed2 nextUV = fixed2(i.uv.x + inc, i.uv.y + 0.);
-                if (nextUV.x > 1.) { nextUV.x -= 1.; }
-                if (nextUV.y > 1.) { nextUV.y -= 1.; }
+				float2 uv = i.uv;
+				float4 c = float4(0.0, 0.0, 0.0, 0.0);
+				float d = length(uv);
+				float a = atan2(uv.x, uv.y);
+				float t = _Time.y;
+				float f = 1;
+				float amp = 1;
 
-                fixed4 nextCol = tex2D(_MainTex, nextUV);
+				for (float j = 0.; j <= PI*2.; j += PI / count*2.)
+				{
+					uv.x = cos(a)*(d + d*amp*sin(a*f + t + j));
+					uv.y = sin(a)*(d + d*amp*cos(a*f + t + j));
 
-                col = fixed4((col.w + nextCol.w) / 2.,
-                             (col.x + nextCol.x) / 2.,
-                             (col.y + nextCol.y) / 2.,
-                             (col.z + nextCol.z) / 2.
-                             );
-
+					c += tex2D(_MainTex, abs(((uv - .5) % (2.0)) - 1.0));
+				}
+				col = (c*3.0 / c.a);
+				
+				//col = tex2D(_MainTex, i.uv);
 				return col;
 			}
 			ENDCG

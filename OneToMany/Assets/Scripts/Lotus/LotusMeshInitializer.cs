@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-using UnityEditor;
 
 public class LotusMeshInitializer : MonoBehaviour
 {
@@ -59,12 +58,13 @@ public class LotusMeshInitializer : MonoBehaviour
 
     public void Reset()
     {
+#if UNITY_EDITOR
         // Create fresh copy of original mesh
         lotusMesh = (Mesh)Instantiate(originalLotusMesh);
         var path = "Assets/Models/Generated/LotusCopy.asset";
-        AssetDatabase.DeleteAsset(path);
-        AssetDatabase.CreateAsset(lotusMesh, path);
-        AssetDatabase.SaveAssets();
+        UnityEditor.AssetDatabase.DeleteAsset(path);
+        UnityEditor.AssetDatabase.CreateAsset(lotusMesh, path);
+        UnityEditor.AssetDatabase.SaveAssets();
 
         // Assign fresh copy
         GetComponent<MeshFilter>().sharedMesh = lotusMesh;
@@ -73,6 +73,7 @@ public class LotusMeshInitializer : MonoBehaviour
         lotusCollider = GetComponent<MeshCollider>(); // note: this actually doesn't change, though maybe it should
         vertices = lotusMesh.vertices;
         newTriangleIndices = new HashSet<int>();
+#endif
     }
 
     void SeparateRimMesh(Transform rimChild)
