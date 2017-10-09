@@ -38,7 +38,8 @@ public class FlashOnConnect : MonoBehaviour {
 	}
 
 	void OnCollisionEnter(Collision collision) {
-		if(collision.gameObject.layer != LayerMask.NameToLayer(cubeLayer)){
+		if(collision.gameObject.layer != LayerMask.NameToLayer(cubeLayer) ||
+           collision.relativeVelocity.magnitude > 2.0f){
             spline.IncreaseFlashCount(cubeIndex);
 			Flash(flashCurve, colors, flashTime,spline.GetFlashCount(cubeIndex));
 		}
