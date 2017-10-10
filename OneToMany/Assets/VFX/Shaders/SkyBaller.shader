@@ -22,7 +22,7 @@
 			float4 _ColorPhase;
 			float4 _ColorFreq;
 			float4 _Shape;
-
+			
 			struct appdata
 			{
 				float4 vertex : POSITION;
