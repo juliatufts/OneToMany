@@ -9,8 +9,8 @@
 	}
 		SubShader
 	{
-		Tags { "RenderType" = "Opaque" }
-		LOD 100
+		Tags{ "Queue" = "Background" "RenderType" = "Background" "PreviewType" = "Skybox" }
+		Cull Off ZWrite Off
 
 		Pass
 		{
