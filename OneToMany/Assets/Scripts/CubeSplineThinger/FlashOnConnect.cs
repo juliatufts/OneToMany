@@ -15,8 +15,14 @@ public class FlashOnConnect : MonoBehaviour {
     [HideInInspector]
     public CubeSpline spline;
     public float flashSpeed;
+    public string lotusLayer;
+    public AK.Wwise.Event onCollide;
+    public AK.Wwise.Event onEnterLotusHole;
 
-	public void Flash(AnimationCurve flashCurve, Color[] colors, float time,int count = 1){
+
+
+
+    public void Flash(AnimationCurve flashCurve, Color[] colors, float time,int count = 1){
 		StopCoroutine("Flash_Coroutine");
 		StartCoroutine(Flash_Coroutine(flashCurve, colors, time,count));
 	}
@@ -42,6 +48,22 @@ public class FlashOnConnect : MonoBehaviour {
            collision.relativeVelocity.magnitude > 2.0f){
             spline.IncreaseFlashCount(cubeIndex);
 			Flash(flashCurve, colors, flashTime,spline.GetFlashCount(cubeIndex));
-		}
+            if (collision.rigidbody 
+                && onCollide != null 
+                && GetComponent<Rigidbody>().velocity.sqrMagnitude > collision.rigidbody.GetComponent<Rigidbody>().velocity.sqrMagnitude) { // if we're the faster of the cubes
+                onCollide.Post(gameObject);
+            }
+        }
 	}
+    void OnTriggerEnter(Collider collider)
+    {
+        if (collider.gameObject.layer == LayerMask.NameToLayer(lotusLayer))
+        {
+            GetComponent<FollowCurveSteering>().currentU = 1; // Force death of Cube
+            if(onEnterLotusHole != null)
+            {
+                onEnterLotusHole.Post(gameObject);
+            }
+        }
+    }
 }
