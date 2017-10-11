@@ -28,6 +28,7 @@ public class SessionManager : MonoBehaviour {
     private float sessionDurationInSeconds;
     private float currentSessionProgressInSeconds;
     private SessionStatus sessionStatus;
+    private Vector4 originalSkyboxColorPhase;
 
     void Start ()
     {
@@ -38,7 +39,20 @@ public class SessionManager : MonoBehaviour {
         Instance = this;
 
         sessionDurationInSeconds = sessionDurationInMinutes * 60f;
+        originalSkyboxColorPhase = RenderSettings.skybox.GetVector("_ColorPhase");
+
         //TODO: enter standby mode
+        RenderSettings.skybox.SetVector("_ColorPhase", new Vector4(
+                originalSkyboxColorPhase.x,
+                originalSkyboxColorPhase.y, 
+                originalSkyboxColorPhase.z, 
+                -0.3f)
+            );
+    }
+
+    void OnDestroy()
+    {
+        RenderSettings.skybox.SetVector("_ColorPhase", originalSkyboxColorPhase);
     }
 	
 	void Update ()
@@ -79,6 +93,7 @@ public class SessionManager : MonoBehaviour {
     public void StartNewSession()
     {
         //TODO: Set up for tutorial
+        StartCoroutine(FadeInSkybox());
 
         sessionStatus = SessionStatus.Tutorial;
         currentSessionProgressInSeconds = 0f;
@@ -92,5 +107,26 @@ public class SessionManager : MonoBehaviour {
             sessionStatus = SessionStatus.Standby;
             //TODO: Shut down some things
         }
+    }
+
+    IEnumerator FadeInSkybox()
+    {
+        var delta = 0.08f;
+        var colorPhase = RenderSettings.skybox.GetVector("_ColorPhase");
+        var w = colorPhase.w;
+
+        while (w < originalSkyboxColorPhase.w)
+        {
+            w += (delta * Time.deltaTime);
+            Debug.Log("w: " + w);
+            RenderSettings.skybox.SetVector("_ColorPhase", new Vector4(
+                originalSkyboxColorPhase.x,
+                originalSkyboxColorPhase.y,
+                originalSkyboxColorPhase.z,
+                w)
+            );
+            yield return new WaitForEndOfFrame();
+        }
+        RenderSettings.skybox.SetVector("_ColorPhase", originalSkyboxColorPhase);
     }
 }
