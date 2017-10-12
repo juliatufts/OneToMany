@@ -49,9 +49,15 @@
 			float4 _Color;
 			float _Density;
 			sampler2D _CameraDepthTexture;
+			sampler2D _CameraDepthNormalsTexture;
 			float4 frag (v2f i, int face : VFACE) : SV_Target
 			{
 				float4 depthSample = tex2Dproj(_CameraDepthTexture, UNITY_PROJ_COORD(i.scrPos));
+				
+				//float depthSample = 0;
+			    //float3 normalValues = (0, 0, 0);
+				//DecodeDepthNormal(tex2D(_CameraDepthNormalsTexture, UNITY_PROJ_COORD(i.scrPos)), depthSample, normalValues);
+
 				float depth = LinearEyeDepth(depthSample);
 				float pDivide = 1/i.clipPos.w;
 				float3 worldDir = (i.worldPos-_WorldSpaceCameraPos)*pDivide;

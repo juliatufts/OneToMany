@@ -82,6 +82,14 @@ public class TouchGazeManager : MonoBehaviour {
 
 	}
 
+    void OnSerializeNetworkView(BitStream stream)
+    {
+        stream.Serialize(ref lotusTouchInSeconds);
+        stream.Serialize(ref lotusGazeInSeconds);
+        stream.Serialize(ref cubesTouchInSeconds);
+        stream.Serialize(ref cubesGazeInSeconds);
+    }
+
     public void BankLotusTouchTime(float time)
     {
         lotusTouchInSeconds += time;
@@ -91,4 +99,5 @@ public class TouchGazeManager : MonoBehaviour {
     {
         cubesTouchInSeconds += time;
     }
+
 }

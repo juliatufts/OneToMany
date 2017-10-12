@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class EnableDepth : MonoBehaviour {
 
-	void Start ()
+    // note: harrison made me
+	void Update ()
     {
         foreach (var cam in Camera.allCameras)
         {
