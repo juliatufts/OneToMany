@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿    using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -42,6 +42,10 @@ public class LotusHoleController : MonoBehaviour {
         SubmeshIndex = value;
     }
 
+    void Awake() {
+        var networkView = GetComponent<NetworkView>();
+        networkView.observed = this;
+    }
     void Start()
     {
         pitch = Random.Range(-2400, 2400);
@@ -100,5 +104,12 @@ public class LotusHoleController : MonoBehaviour {
         {
             touching = false;
         }
+    }
+
+    void OnSerializeNetworkView(BitStream stream) {
+        stream.Serialize(ref timeThisTouch);
+        stream.Serialize(ref totalTimeTouched);
+        stream.Serialize(ref timeSinceLastTouch);
+        stream.Serialize(ref touchValue);
     }
 }
