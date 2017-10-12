@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using VRTK;
 
 [RequireComponent(typeof(Rigidbody))]
 public class FlashOnConnect : MonoBehaviour {
@@ -16,11 +17,35 @@ public class FlashOnConnect : MonoBehaviour {
     public CubeSpline spline;
     public float flashSpeed;
     public string lotusLayer;
+    public AK.Wwise.Event onGrab;
+    public AK.Wwise.Event onRelease;
     public AK.Wwise.Event onCollide;
     public AK.Wwise.Event onEnterLotusHole;
 
 
+    void Start()
+    {
+        VRTK_InteractableObject vrtk = GetComponent<VRTK_InteractableObject>();
+        vrtk.InteractableObjectGrabbed += Grabbed;
+        vrtk.InteractableObjectUngrabbed += Ungrabbed;
+    }
 
+    void OnDestroy()
+    {
+        VRTK_InteractableObject vrtk = GetComponent<VRTK_InteractableObject>();
+        vrtk.InteractableObjectGrabbed -= Grabbed;
+        vrtk.InteractableObjectUngrabbed -= Ungrabbed;
+    }
+
+    void Grabbed(object sender, InteractableObjectEventArgs e)
+    {
+        onGrab.Post(gameObject);
+    }
+
+    void Ungrabbed(object sender, InteractableObjectEventArgs e)
+    {
+        onRelease.Post(gameObject);
+    }
 
     public void Flash(AnimationCurve flashCurve, Color[] colors, float time,int count = 1){
 		StopCoroutine("Flash_Coroutine");

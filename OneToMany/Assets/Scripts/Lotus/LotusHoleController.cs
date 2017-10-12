@@ -12,9 +12,10 @@ public class LotusHoleController : MonoBehaviour {
     [Range(-2400, 2400)]
     public float pitch;
     public AK.Wwise.RTPC pitchRTPC;
-    public AK.Wwise.Event onTouch;
+    public AK.Wwise.Event onTouchStart;
+    public AK.Wwise.Event onTouchEnd;
 
-	[Tooltip("Time since last touch must be above this in order for next touch to have OnTouch event fired.")]
+    [Tooltip("Time since last touch must be above this in order for next touch to have OnTouch event fired.")]
 	public float onTouchCoolDownThreshold = 1f;
 
     [Tooltip("Used only for initializing the mesh")]
@@ -42,10 +43,12 @@ public class LotusHoleController : MonoBehaviour {
         SubmeshIndex = value;
     }
 
-    void Awake() {
+    void Awake()
+    {
         var networkView = GetComponent<NetworkView>();
         networkView.observed = this;
     }
+
     void Start()
     {
         pitch = Random.Range(-2400, 2400);
@@ -77,10 +80,15 @@ public class LotusHoleController : MonoBehaviour {
 				if (onStartTouch != null)
 				{
                     pitchRTPC.SetValue(gameObject, pitch);
-                    onTouch.Post(gameObject);
+                    onTouchStart.Post(gameObject);
                     onStartTouch();
 				}
 			}
+            else
+            {
+                StopAllCoroutines();
+                // TODO: start coroutine for playing sound ?
+            }
 
             touching = true;
             timeSinceLastTouch = 0;
@@ -103,6 +111,7 @@ public class LotusHoleController : MonoBehaviour {
         if (other.transform.CompareTag("GameController"))
         {
             touching = false;
+            onTouchEnd.Post(gameObject);
         }
     }
 
