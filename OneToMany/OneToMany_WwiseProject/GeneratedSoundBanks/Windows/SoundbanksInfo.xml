@@ -21,12 +21,45 @@
 			<ShortName>Master</ShortName>
 			<Path>Master.bnk</Path>
 			<IncludedEvents>
+				<Event Id="1792046091" Name="Collision" ObjectPath="\Events\Default Work Unit\Collision"/>
+				<Event Id="2398939645" Name="Dunk" ObjectPath="\Events\Default Work Unit\Dunk"/>
 				<Event Id="652701381" Name="LotusHoleTouch" ObjectPath="\Events\Default Work Unit\LotusHoleTouch"/>
+				<Event Id="2547328439" Name="LotusTouch" ObjectPath="\Events\Default Work Unit\LotusTouch"/>
+				<Event Id="2228486476" Name="LotusTouch_2" ObjectPath="\Events\Default Work Unit\LotusTouch_2"/>
+				<Event Id="4289927095" Name="LotusTouchStop" ObjectPath="\Events\Default Work Unit\LotusTouchStop" MaxAttenuation="0.000000"/>
+				<Event Id="3358606156" Name="LotusTouchStop_2" ObjectPath="\Events\Default Work Unit\LotusTouchStop_2" MaxAttenuation="0.000000"/>
+				<Event Id="1122283870" Name="MusicStart" ObjectPath="\Events\Music\MusicStart"/>
+				<Event Id="3978196478" Name="MusicStop" ObjectPath="\Events\Music\MusicStop" MaxAttenuation="0.000000"/>
+				<Event Id="469357355" Name="PianoHit" ObjectPath="\Events\Default Work Unit\PianoHit"/>
 			</IncludedEvents>
 			<IncludedMemoryFiles>
+				<File Id="342341401" Language="SFX">
+					<ShortName>dunk.wav</ShortName>
+					<Path>SFX\dunk_1C9C67B2.wem</Path>
+				</File>
+				<File Id="413870107" Language="SFX">
+					<ShortName>lotus2.wav</ShortName>
+					<Path>SFX\lotus2_F17FB28C.wem</Path>
+				</File>
 				<File Id="644362424" Language="SFX">
 					<ShortName>ding.wav</ShortName>
 					<Path>SFX\ding_1C9C67B2.wem</Path>
+				</File>
+				<File Id="819056197" Language="SFX">
+					<ShortName>piano hit.wav</ShortName>
+					<Path>SFX\piano hit_1C9C67B2.wem</Path>
+				</File>
+				<File Id="851600812" Language="SFX">
+					<ShortName>collision1.wav</ShortName>
+					<Path>SFX\collision1_1C9C67B2.wem</Path>
+				</File>
+				<File Id="1049240108" Language="SFX">
+					<ShortName>lotus.wav</ShortName>
+					<Path>SFX\lotus_F17FB28C.wem</Path>
+				</File>
+				<File Id="1069811884" Language="SFX">
+					<ShortName>Nocturne.wav</ShortName>
+					<Path>SFX\Nocturne_F17FB28C.wem</Path>
 				</File>
 			</IncludedMemoryFiles>
 		</SoundBank>

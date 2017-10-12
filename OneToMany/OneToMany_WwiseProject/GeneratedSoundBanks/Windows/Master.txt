@@ -1,9 +1,24 @@
 Event	ID	Name			Wwise Object Path	Notes
+	469357355	PianoHit			\Default Work Unit\PianoHit	
 	652701381	LotusHoleTouch			\Default Work Unit\LotusHoleTouch	
+	1122283870	MusicStart			\Music\MusicStart	
+	1792046091	Collision			\Default Work Unit\Collision	
+	2228486476	LotusTouch_2			\Default Work Unit\LotusTouch_2	
+	2398939645	Dunk			\Default Work Unit\Dunk	
+	2547328439	LotusTouch			\Default Work Unit\LotusTouch	
+	3358606156	LotusTouchStop_2			\Default Work Unit\LotusTouchStop_2	
+	3978196478	MusicStop			\Music\MusicStop	
+	4289927095	LotusTouchStop			\Default Work Unit\LotusTouchStop	
 
 Game Parameter	ID	Name			Wwise Object Path	Notes
 	1908158473	Pitch			\Default Work Unit\Pitch	
 
 In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
+	342341401	dunk	D:\Users\julia\Documents\Personal\OneToMany\OneToMany\OneToMany_WwiseProject\.cache\Windows\SFX\dunk_1C9C67B2.wem		\Actor-Mixer Hierarchy\Default Work Unit\dunk		352864
+	413870107	lotus2	D:\Users\julia\Documents\Personal\OneToMany\OneToMany\OneToMany_WwiseProject\.cache\Windows\SFX\lotus2_F17FB28C.wem		\Actor-Mixer Hierarchy\Default Work Unit\lotus2		4939264
 	644362424	ding	D:\Users\julia\Documents\Personal\OneToMany\OneToMany\OneToMany_WwiseProject\.cache\Windows\SFX\ding_1C9C67B2.wem		\Actor-Mixer Hierarchy\Default Work Unit\ding		302464
+	819056197	piano hit	D:\Users\julia\Documents\Personal\OneToMany\OneToMany\OneToMany_WwiseProject\.cache\Windows\SFX\piano hit_1C9C67B2.wem		\Actor-Mixer Hierarchy\Default Work Unit\piano hit		617464
+	851600812	collision1	D:\Users\julia\Documents\Personal\OneToMany\OneToMany\OneToMany_WwiseProject\.cache\Windows\SFX\collision1_1C9C67B2.wem		\Actor-Mixer Hierarchy\Default Work Unit\collision1		264664
+	1049240108	lotus	D:\Users\julia\Documents\Personal\OneToMany\OneToMany\OneToMany_WwiseProject\.cache\Windows\SFX\lotus_F17FB28C.wem		\Actor-Mixer Hierarchy\Default Work Unit\lotus		4939264
+	1069811884	Nocturne	D:\Users\julia\Documents\Personal\OneToMany\OneToMany\OneToMany_WwiseProject\.cache\Windows\SFX\Nocturne_F17FB28C.wem		\Interactive Music Hierarchy\Default Work Unit\Music\Nocturne\Nocturne		53773992
 

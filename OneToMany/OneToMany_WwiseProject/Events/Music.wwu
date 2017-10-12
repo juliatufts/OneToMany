@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{58AA1E08-1A4D-4ED8-892C-4A53C44D5D20}" SchemaVersion="80">
+	<Events>
+		<WorkUnit Name="Music" ID="{58AA1E08-1A4D-4ED8-892C-4A53C44D5D20}" PersistMode="Standalone">
+			<ChildrenList>
+				<Event Name="MusicStop" ID="{EC2CF70B-CD5C-4F59-92A4-58CBE91CF012}">
+					<ChildrenList>
+						<Action Name="" ID="{4F6B38AE-384F-4D12-A275-BC153F41F84C}" ShortID="1062419634">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Music" ID="{BEC293C5-2A79-49CC-9977-1517F078F7F1}" WorkUnitID="{914E970B-A475-40B7-A4C3-112997025B47}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="MusicStart" ID="{36F7713B-390A-4B6A-8A0C-4053FA05EAA4}">
+					<ChildrenList>
+						<Action Name="" ID="{7DDF794E-A8E0-4D5A-954A-22526F9C964A}" ShortID="261509662">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="1"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Music" ID="{BEC293C5-2A79-49CC-9977-1517F078F7F1}" WorkUnitID="{914E970B-A475-40B7-A4C3-112997025B47}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+			</ChildrenList>
+		</WorkUnit>
+	</Events>
+</WwiseDocument>

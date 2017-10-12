@@ -13,7 +13,16 @@ namespace AK
 {
     namespace EVENTS
     {
+        static const AkUniqueID COLLISION = 1792046091U;
+        static const AkUniqueID DUNK = 2398939645U;
         static const AkUniqueID LOTUSHOLETOUCH = 652701381U;
+        static const AkUniqueID LOTUSTOUCH = 2547328439U;
+        static const AkUniqueID LOTUSTOUCH_2 = 2228486476U;
+        static const AkUniqueID LOTUSTOUCHSTOP = 4289927095U;
+        static const AkUniqueID LOTUSTOUCHSTOP_2 = 3358606156U;
+        static const AkUniqueID MUSICSTART = 1122283870U;
+        static const AkUniqueID MUSICSTOP = 3978196478U;
+        static const AkUniqueID PIANOHIT = 469357355U;
     } // namespace EVENTS
 
     namespace GAME_PARAMETERS

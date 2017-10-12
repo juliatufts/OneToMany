@@ -1,6 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
 <WwiseDocument Type="WorkUnit" ID="{914E970B-A475-40B7-A4C3-112997025B47}" SchemaVersion="80">
 	<InteractiveMusic>
-		<WorkUnit Name="Default Work Unit" ID="{914E970B-A475-40B7-A4C3-112997025B47}" PersistMode="Standalone"/>
+		<WorkUnit Name="Default Work Unit" ID="{914E970B-A475-40B7-A4C3-112997025B47}" PersistMode="Standalone">
+			<ChildrenList>
+				<MusicPlaylistContainer Name="Music" ID="{BEC293C5-2A79-49CC-9977-1517F078F7F1}" ShortID="582144825">
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{72AC22D2-3979-4F1E-8252-B73FE47FA11D}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{96350899-C524-4021-8BCC-2439601D9326}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<MusicSegment Name="Nocturne" ID="{75CDE10F-4525-4563-B8DD-C7E64625EFEA}" ShortID="865703848">
+							<PropertyList>
+								<Property Name="EndPosition" Type="Real64" Value="308088.163265306"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{72AC22D2-3979-4F1E-8252-B73FE47FA11D}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{96350899-C524-4021-8BCC-2439601D9326}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<MusicTrack Name="Nocturne" ID="{392530AD-24EF-4BB5-892F-2FA244E172B3}" ShortID="211036012">
+									<ReferenceList>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{96350899-C524-4021-8BCC-2439601D9326}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="Nocturne" ID="{73E9E88E-21EA-4CAF-98B5-2A8CEBAD778B}" ShortID="1069811884">
+											<Language>SFX</Language>
+											<AudioFile>Nocturne.wav</AudioFile>
+										</AudioFileSource>
+									</ChildrenList>
+									<TransitionList>
+										<MusicTransition Name="Root" ID="{BE987086-AE94-40DA-8915-80D3417F8F9E}">
+											<PropertyList>
+												<Property Name="IsFolder" Type="bool" Value="True"/>
+											</PropertyList>
+											<TransitionInfo/>
+										</MusicTransition>
+									</TransitionList>
+									<SequenceList>
+										<MusicTrackSequence Name="" ID="{FFB23BEC-1D1E-4986-A9CD-F9B3CBD89732}">
+											<ClipList>
+												<MusicClip Name="Nocturne" ID="{91BEE52F-8727-46E0-AE53-AAA0EB984D9F}">
+													<PropertyList>
+														<Property Name="EndTrimOffset" Type="Real64" Value="308088.163265306"/>
+														<Property Name="FadeInMode" Type="int16" Value="0"/>
+														<Property Name="FadeOutMode" Type="int16" Value="0"/>
+													</PropertyList>
+													<AudioSourceRef Name="Nocturne" ID="{73E9E88E-21EA-4CAF-98B5-2A8CEBAD778B}"/>
+												</MusicClip>
+											</ClipList>
+										</MusicTrackSequence>
+									</SequenceList>
+								</MusicTrack>
+							</ChildrenList>
+							<CueList>
+								<MusicCue Name="Entry Cue" ID="{A7C86F0A-4348-4805-A4E4-625F01C9F59C}"/>
+								<MusicCue Name="Exit Cue" ID="{7996A977-BC03-46ED-BA3E-A19824C1BBE3}">
+									<PropertyList>
+										<Property Name="CueType" Type="int16" Value="1"/>
+										<Property Name="TimeMs" Type="Real64" Value="308088.163265306"/>
+									</PropertyList>
+								</MusicCue>
+							</CueList>
+						</MusicSegment>
+					</ChildrenList>
+					<TransitionList>
+						<MusicTransition Name="Root" ID="{6896BFD7-4B3C-473E-854B-90CA60D3F1DA}">
+							<PropertyList>
+								<Property Name="IsFolder" Type="bool" Value="True"/>
+							</PropertyList>
+							<ChildrenList>
+								<MusicTransition Name="Transition" ID="{B67BB99A-BE6C-42FC-9DA9-4086ED7EF32E}">
+									<TransitionInfo/>
+								</MusicTransition>
+							</ChildrenList>
+							<TransitionInfo/>
+						</MusicTransition>
+					</TransitionList>
+					<Playlist>
+						<MusicPlaylistItem Name="" ID="{1E212D2D-7FDC-4952-A85F-D8E8EA6DF5FF}" ShortID="639012146">
+							<PropertyList>
+								<Property Name="LoopCount" Type="int16" Value="0"/>
+							</PropertyList>
+						</MusicPlaylistItem>
+					</Playlist>
+				</MusicPlaylistContainer>
+			</ChildrenList>
+		</WorkUnit>
 	</InteractiveMusic>
 </WwiseDocument>
