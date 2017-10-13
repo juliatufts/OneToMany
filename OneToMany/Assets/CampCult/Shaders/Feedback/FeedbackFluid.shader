@@ -22,6 +22,7 @@ uniform float4 _Mouse;
  uniform float4 _Feedback_ST;
  uniform float4 _Feedback_TexelSize;
  uniform float4 _Shape;
+ uniform float4 _Strength;
 /*
     A fluid-like dynamical system
 	see: https://www.shadertoy.com/view/XddSRX
@@ -96,7 +97,7 @@ float2 vUv = i.uv.xy;// +_Feedback_TexelSize.xy*.5;
 	const float upd = .99;  // update smoothing
 	const float sq2 = 0.6;  // diagonal weight
 
-    float2 texel = _Feedback_TexelSize.xy*_Shape.zw;
+    float2 texel = _Feedback_TexelSize.xy*_Strength.xy;
    
     // 3x3 neighborhood coordinates
 	float4 step = float4(texel.xy, -texel.xy);

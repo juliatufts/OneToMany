@@ -119,14 +119,36 @@ public class TouchGazeManager : MonoBehaviour {
     public float GetTime(InteractType interact)
     {
         if (interact == InteractType.CubesGaze)
-            return CubesGaze;
+            return cubesGazeInSeconds;
         if (interact == InteractType.CubesTouch)
-            return CubesTouch;
+            return cubesTouchInSeconds;
         if (interact == InteractType.LotusGaze)
-            return LotusGaze;
+            return lotusGazeInSeconds;
         if (interact == InteractType.LotusTouch)
-            return LotusTouch;
+            return lotusTouchInSeconds;
         return 0;
+    }
+
+    public void SetTime(InteractType interact, float time)
+    {
+        if (interact == InteractType.CubesGaze)
+        {
+            cubesGazeInSeconds += time;
+            PlayerPrefs.SetFloat("gazeCubes", cubesGazeInSeconds);
+        }
+        else if (interact == InteractType.CubesTouch)
+        {
+            BankCubesTouchTime(time);
+        }
+        else if (interact == InteractType.LotusGaze)
+        {
+            lotusGazeInSeconds += time;
+            PlayerPrefs.SetFloat("gazeLotus", lotusGazeInSeconds);
+        }
+        else if (interact == InteractType.LotusTouch)
+        {
+            BankLotusTouchTime(time);
+        }
     }
 
 }
