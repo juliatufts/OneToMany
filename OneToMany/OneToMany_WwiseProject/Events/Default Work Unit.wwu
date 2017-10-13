@@ -17,15 +17,16 @@
 						</Action>
 					</ChildrenList>
 				</Event>
-				<Event Name="LotusTouch" ID="{F630469F-340B-4848-B046-ECD641922695}">
+				<Event Name="LotusTouchStart" ID="{F630469F-340B-4848-B046-ECD641922695}">
 					<ChildrenList>
 						<Action Name="" ID="{39CF65C2-9162-4EA4-8FA0-A6501814057A}" ShortID="503561087">
 							<PropertyList>
 								<Property Name="ActionType" Type="int16" Value="1"/>
+								<Property Name="FadeTime" Type="Real64" Value="3"/>
 							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Target">
-									<ObjectRef Name="lotus" ID="{11A3F908-1495-4F80-A398-17A12877F726}" WorkUnitID="{ED47D36C-4990-4BF8-9DA7-902D95EB178F}"/>
+									<ObjectRef Name="lotus_loop" ID="{D9E60912-CBE5-480E-84B1-788EDBAEC510}" WorkUnitID="{ED47D36C-4990-4BF8-9DA7-902D95EB178F}"/>
 								</Reference>
 							</ReferenceList>
 						</Action>
@@ -36,10 +37,11 @@
 						<Action Name="" ID="{2B502705-B868-465C-BFEA-EE69A49709B9}" ShortID="929605288">
 							<PropertyList>
 								<Property Name="ActionType" Type="int16" Value="2"/>
+								<Property Name="FadeTime" Type="Real64" Value="3"/>
 							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Target">
-									<ObjectRef Name="lotus" ID="{11A3F908-1495-4F80-A398-17A12877F726}" WorkUnitID="{ED47D36C-4990-4BF8-9DA7-902D95EB178F}"/>
+									<ObjectRef Name="lotus_loop" ID="{D9E60912-CBE5-480E-84B1-788EDBAEC510}" WorkUnitID="{ED47D36C-4990-4BF8-9DA7-902D95EB178F}"/>
 								</Reference>
 							</ReferenceList>
 						</Action>
@@ -87,29 +89,15 @@
 						</Action>
 					</ChildrenList>
 				</Event>
-				<Event Name="LotusTouch_2" ID="{11E7D3A7-02C9-4A09-AEA7-ABAB45283897}">
+				<Event Name="Ding" ID="{70F6EE50-F30D-4F3B-B6E7-E75B1E3258CB}">
 					<ChildrenList>
-						<Action Name="" ID="{BC203D21-A815-4A0A-A790-54B805A4CF67}" ShortID="244353832">
+						<Action Name="" ID="{FC6F34A9-7955-486D-9C45-F11B37ED5224}" ShortID="193341165">
 							<PropertyList>
 								<Property Name="ActionType" Type="int16" Value="1"/>
 							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Target">
-									<ObjectRef Name="lotus2" ID="{E80ACA13-4F33-42C5-A296-70285515AFE1}" WorkUnitID="{ED47D36C-4990-4BF8-9DA7-902D95EB178F}"/>
-								</Reference>
-							</ReferenceList>
-						</Action>
-					</ChildrenList>
-				</Event>
-				<Event Name="LotusTouchStop_2" ID="{E804F663-E71A-4582-855E-4243FAF30784}">
-					<ChildrenList>
-						<Action Name="" ID="{28F8BDF5-E803-4FB9-A1FC-446C69E94B79}" ShortID="419175884">
-							<PropertyList>
-								<Property Name="ActionType" Type="int16" Value="2"/>
-							</PropertyList>
-							<ReferenceList>
-								<Reference Name="Target">
-									<ObjectRef Name="lotus2" ID="{E80ACA13-4F33-42C5-A296-70285515AFE1}" WorkUnitID="{ED47D36C-4990-4BF8-9DA7-902D95EB178F}"/>
+									<ObjectRef Name="ding" ID="{64402160-3430-4CCB-97D7-E93F9D32AD9E}" WorkUnitID="{ED47D36C-4990-4BF8-9DA7-902D95EB178F}"/>
 								</Reference>
 							</ReferenceList>
 						</Action>
