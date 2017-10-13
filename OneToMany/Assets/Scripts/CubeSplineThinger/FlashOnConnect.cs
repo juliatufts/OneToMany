@@ -21,6 +21,7 @@ public class FlashOnConnect : MonoBehaviour {
     public AK.Wwise.Event onRelease;
     public AK.Wwise.Event onCollide;
     public AK.Wwise.Event onEnterLotusHole;
+    public GameObject particleEffect;
 
 
     void Start()
@@ -75,7 +76,14 @@ public class FlashOnConnect : MonoBehaviour {
 			Flash(flashCurve, colors, flashTime,spline.GetFlashCount(cubeIndex));
             if (collision.rigidbody 
                 && onCollide != null 
+                && collision.relativeVelocity.magnitude > 2.0f
                 && GetComponent<Rigidbody>().velocity.sqrMagnitude > collision.rigidbody.GetComponent<Rigidbody>().velocity.sqrMagnitude) { // if we're the faster of the cubes
+                onCollide.Post(gameObject);
+            }
+            if (!collision.rigidbody
+                && onCollide != null
+                && collision.relativeVelocity.magnitude > 2.0f)
+            {
                 onCollide.Post(gameObject);
             }
         }
@@ -88,6 +96,8 @@ public class FlashOnConnect : MonoBehaviour {
             if(onEnterLotusHole != null)
             {
                 onEnterLotusHole.Post(gameObject);
+                var go = Instantiate(particleEffect, collider.transform.position, Quaternion.LookRotation(-collider.transform.right));
+                
             }
         }
     }
