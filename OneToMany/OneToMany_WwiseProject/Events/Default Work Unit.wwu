@@ -103,6 +103,7 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Event Name="MusicalDunk" ID="{DC96A8E0-B154-41B9-A7D5-B85809A1C4C8}"/>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>

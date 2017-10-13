@@ -17,12 +17,14 @@ public class FlashOnConnect : MonoBehaviour {
     public CubeSpline spline;
     public float flashSpeed;
     public string lotusLayer;
+    public AK.Wwise.RTPC pitchRTPC;
     public AK.Wwise.Event onGrab;
     public AK.Wwise.Event onRelease;
     public AK.Wwise.Event onCollide;
     public AK.Wwise.Event onEnterLotusHole;
     public GameObject particleEffect;
-
+    float pitch;
+    int[] intervals = { 2, 4, 5, 7 };
 
     void Start()
     {
@@ -40,20 +42,27 @@ public class FlashOnConnect : MonoBehaviour {
 
     void Grabbed(object sender, InteractableObjectEventArgs e)
     {
+        pitch = 100f * Random.Range(-10, 10);
+        pitchRTPC.SetValue(gameObject, pitch);
         onGrab.Post(gameObject);
     }
 
     void Ungrabbed(object sender, InteractableObjectEventArgs e)
     {
-        onRelease.Post(gameObject);
+        var interval = intervals[Random.Range(0, intervals.Length)];
+        pitch = pitch - interval * 100f;
+        pitchRTPC.SetValue(gameObject, pitch);
+        onGrab.Post(gameObject);
     }
 
-    public void Flash(AnimationCurve flashCurve, Color[] colors, float time,int count = 1){
+    public void Flash(AnimationCurve flashCurve, Color[] colors, float time,int count = 1)
+    {
 		StopCoroutine("Flash_Coroutine");
 		StartCoroutine(Flash_Coroutine(flashCurve, colors, time,count));
 	}
 
-	IEnumerator Flash_Coroutine(AnimationCurve flashCurve, Color[] colors, float time, int count){
+	IEnumerator Flash_Coroutine(AnimationCurve flashCurve, Color[] colors, float time, int count)
+    {
 		var renderer = GetComponent<Renderer>();
 		float startTime = Time.time;
         //int i = 0;
@@ -95,6 +104,16 @@ public class FlashOnConnect : MonoBehaviour {
             GetComponent<FollowCurveSteering>().currentU = 1; // Force death of Cube
             if(onEnterLotusHole != null)
             {
+                //pitch = 100f * Random.Range(-10, 10);
+                //pitchRTPC.SetValue(gameObject, pitch);
+                //onGrab.Post(gameObject);
+                //pitchRTPC.SetValue(gameObject, pitch + 400f);
+                //onGrab.Post(gameObject);
+                //pitchRTPC.SetValue(gameObject, pitch + 700f);
+                //onGrab.Post(gameObject);
+                //pitchRTPC.SetValue(gameObject, pitch + 1100f);
+                //onGrab.Post(gameObject);
+
                 onEnterLotusHole.Post(gameObject);
                 var go = Instantiate(particleEffect, collider.transform.position, Quaternion.LookRotation(-collider.transform.right));
                 

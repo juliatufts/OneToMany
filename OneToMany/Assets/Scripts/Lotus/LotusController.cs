@@ -14,20 +14,21 @@ public class LotusController : MonoBehaviour {
     void Awake()
     {
         // If palette isn't big enough, fill it out
-        numHoles = LotusCollidersRoot.childCount;
+        var lotusChildren = LotusCollidersRoot.GetComponentsInChildren<LotusHoleView>();
         var newPalette = new List<Color>();
-        for (int i = 0; i < numHoles; i++)
+        for (int i = 0; i < lotusChildren.Length; i++)
         {
-            var randomKey = Random.Range(0f, 1f);
+            var randomKey = Random.Range(0f, 0.5f);
+            lotusChildren[i].value = randomKey;
             newPalette.Add(colorGradient.Evaluate(randomKey));
         }
         fullPalette = newPalette;
 
         // Assign to Lotus holes
-        var lotusChildren = LotusCollidersRoot.GetComponentsInChildren<LotusHoleView>();
         for (int i = 0; i < lotusChildren.Length; i++)
         {
             lotusChildren[i].holeColor = fullPalette[i];
+            lotusChildren[i].controller = this;
         }
     }
 }

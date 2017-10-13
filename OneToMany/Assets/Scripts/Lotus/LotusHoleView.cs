@@ -6,25 +6,25 @@ public class LotusHoleView : MonoBehaviour {
 
     public float minDensity = 0f;
     public float maxDensity = 4f;
+    public float value;
     public Color holeColor;
     LotusHoleController lotus;
 
+    [HideInInspector]
+    public LotusController controller;
+
+    private float originalValue;
     private float maxHoleAlpha = 1f;
 	private MeshRenderer meshRenderer;
 	private Material rimMaterial;
 	private Material holeMaterial;
 	private Color originalRimColor;
     private Color originalHoleColor;
+    private Gradient gradient;
 
     void Awake()
     {
         lotus = GetComponent<LotusHoleController>();
-        lotus.onStartTouch += OnStartTouch;
-    }
-
-    void OnDestroy()
-    {
-        lotus.onStartTouch -= OnStartTouch;
     }
 
     void Start ()
@@ -37,6 +37,7 @@ public class LotusHoleView : MonoBehaviour {
 
 		holeMaterial.color = AdjustAlpha(holeColor, 0f);
         holeMaterial.SetFloat("_Density", minDensity);
+        originalValue = value;
 
 		// Check if rim materials have been generated
 		var lotusRenderer = lotus.gameObject.GetComponent<MeshRenderer>();
@@ -45,19 +46,24 @@ public class LotusHoleView : MonoBehaviour {
 			rimMaterial = lotusRenderer.materials[lotus.SubmeshIndex];
 			originalRimColor = rimMaterial.color;
 		}
+
+        if (controller != null)
+        {
+            gradient = controller.colorGradient;
+        }
+        else
+        {
+            Debug.LogError("Color gradient not found");
+        }
     }
 	
 	void Update ()
     {
         var density = lotus.TouchIntensity * (maxDensity - minDensity) + minDensity;
         holeMaterial.SetFloat("_Density", density);
-        //holeMaterial.color = AdjustAlpha(holeMaterial.color, maxHoleAlpha * lotus.TouchIntensity);
-	}
 
-    void OnStartTouch()
-    {
-        //TODO: sound
-    }
+        holeMaterial.color = gradient.Evaluate(originalValue + Mathf.Lerp(0f, 1f - originalValue, lotus.TouchIntensity));
+	}
 
 	Color AdjustAlpha(Color c, float a)
 	{

@@ -166,6 +166,34 @@
 								<Value>40</Value>
 							</ValueList>
 						</Property>
+						<Property Name="Pitch" Type="int32">
+							<RTPCList>
+								<RTPC Name="" ID="{7D60BD7D-90DA-4110-9121-9550DB57564F}" ShortID="841923808">
+									<ReferenceList>
+										<Reference Name="ControlInput">
+											<ObjectRef Name="Pitch" ID="{CAE7FE7F-99B4-4C2E-AC6A-6CCEEE0BFC30}" WorkUnitID="{C0293CFA-FF76-4010-B667-78614D023FF5}"/>
+										</Reference>
+									</ReferenceList>
+									<Curve Name="" ID="{CCE35BDF-A5B8-4B8C-8782-3BEC6CFA2629}">
+										<PropertyList>
+											<Property Name="Flags" Type="int32" Value="65537"/>
+										</PropertyList>
+										<PointList>
+											<Point>
+												<XPos>-2400</XPos>
+												<YPos>-2400</YPos>
+												<Flags>5</Flags>
+											</Point>
+											<Point>
+												<XPos>2400</XPos>
+												<YPos>2400</YPos>
+												<Flags>37</Flags>
+											</Point>
+										</PointList>
+									</Curve>
+								</RTPC>
+							</RTPCList>
+						</Property>
 					</PropertyList>
 					<ReferenceList>
 						<Reference Name="Conversion">
@@ -190,8 +218,36 @@
 						<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
 						<Property Name="Lowpass" Type="int16">
 							<ValueList>
-								<Value>50</Value>
+								<Value>40</Value>
 							</ValueList>
+						</Property>
+						<Property Name="Pitch" Type="int32">
+							<RTPCList>
+								<RTPC Name="" ID="{F29AAD2B-0814-4CE5-8689-49D32487E81D}" ShortID="752231298">
+									<ReferenceList>
+										<Reference Name="ControlInput">
+											<ObjectRef Name="Pitch" ID="{CAE7FE7F-99B4-4C2E-AC6A-6CCEEE0BFC30}" WorkUnitID="{C0293CFA-FF76-4010-B667-78614D023FF5}"/>
+										</Reference>
+									</ReferenceList>
+									<Curve Name="" ID="{E9E37DC1-D53C-4685-AD4A-ED04372BC6C7}">
+										<PropertyList>
+											<Property Name="Flags" Type="int32" Value="65537"/>
+										</PropertyList>
+										<PointList>
+											<Point>
+												<XPos>-2400</XPos>
+												<YPos>-2400</YPos>
+												<Flags>5</Flags>
+											</Point>
+											<Point>
+												<XPos>2400</XPos>
+												<YPos>2400</YPos>
+												<Flags>37</Flags>
+											</Point>
+										</PointList>
+									</Curve>
+								</RTPC>
+							</RTPCList>
 						</Property>
 					</PropertyList>
 					<ReferenceList>
