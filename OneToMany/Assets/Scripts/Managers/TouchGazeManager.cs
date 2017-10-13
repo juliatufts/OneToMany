@@ -4,6 +4,14 @@ using UnityEngine;
 
 public class TouchGazeManager : MonoBehaviour {
 
+    public enum InteractType
+    {
+        LotusTouch,
+        LotusGaze,
+        CubesTouch,
+        CubesGaze
+    }
+
     public static TouchGazeManager Instance;
 
     public Camera ViveCamera;
@@ -53,15 +61,20 @@ public class TouchGazeManager : MonoBehaviour {
             Debug.LogError("More than one TouchGazeManager in scene");
         }
         Instance = this;
+        
 
-        lotusTouchInSeconds = 0f;
-        lotusGazeInSeconds = 0f;
-        cubesTouchInSeconds = 0f;
-        cubesGazeInSeconds = 0f;
+        lotusTouchInSeconds = PlayerPrefs.GetFloat("touchLotus");
+        lotusGazeInSeconds = PlayerPrefs.GetFloat("gazeLotus"); ;
+        cubesTouchInSeconds = PlayerPrefs.GetFloat("touchCubes"); ;
+        cubesGazeInSeconds = PlayerPrefs.GetFloat("gazeCubes"); ;
     }
 	
 	void Update ()
     {
+        if (Input.GetKeyDown(KeyCode.F5))
+        {
+            lotusTouchInSeconds = lotusGazeInSeconds = cubesGazeInSeconds = cubesTouchInSeconds = 0;
+        }
         // Update Gaze counts
         var ray = new Ray(ViveCamera.transform.position, ViveCamera.transform.forward);
         RaycastHit hit;
@@ -71,16 +84,17 @@ public class TouchGazeManager : MonoBehaviour {
             if (LayerMask.NameToLayer(lotusLayer) == hit.collider.gameObject.layer)
             {
                 lotusGazeInSeconds += Time.deltaTime;
+                PlayerPrefs.SetFloat("gazeLotus", lotusGazeInSeconds);
             }
             else if (LayerMask.NameToLayer(cubesLayer) == hit.collider.gameObject.layer)
             {
                 cubesGazeInSeconds += Time.deltaTime;
+                PlayerPrefs.SetFloat("gazeCubes", cubesGazeInSeconds);
             }
         }
-
         // Update Shader values
 
-	}
+    }
 
     void OnSerializeNetworkView(BitStream stream)
     {
@@ -93,11 +107,26 @@ public class TouchGazeManager : MonoBehaviour {
     public void BankLotusTouchTime(float time)
     {
         lotusTouchInSeconds += time;
+        PlayerPrefs.SetFloat("touchLotus", lotusTouchInSeconds);
     }
 
     public void BankCubesTouchTime(float time)
     {
         cubesTouchInSeconds += time;
+        PlayerPrefs.SetFloat("touchCubes", cubesTouchInSeconds);
+    }
+
+    public float GetTime(InteractType interact)
+    {
+        if (interact == InteractType.CubesGaze)
+            return CubesGaze;
+        if (interact == InteractType.CubesTouch)
+            return CubesTouch;
+        if (interact == InteractType.LotusGaze)
+            return LotusGaze;
+        if (interact == InteractType.LotusTouch)
+            return LotusTouch;
+        return 0;
     }
 
 }
