@@ -96,6 +96,14 @@ public class TouchGazeManager : MonoBehaviour {
 
     }
 
+    void OnGUI()
+    {
+        GUI.Label(new Rect(10, 10, 100, 20), "Lotus Touch: " + LotusTouch);
+        GUI.Label(new Rect(10, 30, 100, 20), "Lotus Gaze: " + LotusGaze);
+        GUI.Label(new Rect(10, 50, 100, 20), "Cubes Touch: " + CubesTouch);
+        GUI.Label(new Rect(10, 70, 100, 20), "Cubes Gaze: " + CubesGaze);
+    }
+
     void OnSerializeNetworkView(BitStream stream)
     {
         stream.Serialize(ref lotusTouchInSeconds);
