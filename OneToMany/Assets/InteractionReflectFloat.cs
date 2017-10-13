@@ -6,9 +6,9 @@ public class InteractionReflectFloat : MonoBehaviour {
 
     public TouchGazeManager.InteractType interact;
     public CampReflectFloat output;
-    public float multiplier;
+    public float timeMultiplier = 1;
     
 	void Update () {
-        output.SetValue(TouchGazeManager.Instance.GetTime(interact) * multiplier);	
+        output.SetValue(TouchGazeManager.Instance.GetTime(interact) * timeMultiplier);	
 	}
 }
