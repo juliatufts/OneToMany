@@ -21,7 +21,7 @@ public class TimeEditor : EditorWindow
         interact = (TouchGazeManager.InteractType)EditorGUILayout.EnumPopup("interact type", interact);
         if (GUILayout.Button("AddTime"))
         {
-            TouchGazeManager.Instance.SetTime(interact, time);
+            TouchGazeManager.Instance.AddTime(interact, time);
         }
     }
 }

@@ -68,12 +68,29 @@ public class TouchGazeManager : MonoBehaviour {
         cubesTouchInSeconds = PlayerPrefs.GetFloat("touchCubes"); ;
         cubesGazeInSeconds = PlayerPrefs.GetFloat("gazeCubes"); ;
     }
+
+    void OnDisable()
+    {
+        Save();
+    }
+
+    public void Save()
+    {
+        PlayerPrefs.SetFloat("gazeLotus", lotusGazeInSeconds);
+        PlayerPrefs.SetFloat("gazeCubes", cubesGazeInSeconds);
+        PlayerPrefs.SetFloat("touchLotus", lotusTouchInSeconds);
+        PlayerPrefs.SetFloat("touchCubes", cubesTouchInSeconds);
+    }
 	
 	void Update ()
     {
-        if (Input.GetKeyDown(KeyCode.F5))
+        if (Input.GetKeyDown(KeyCode.F5) && Input.GetKey(KeyCode.LeftShift))
         {
             lotusTouchInSeconds = lotusGazeInSeconds = cubesGazeInSeconds = cubesTouchInSeconds = 0;
+        }
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Save();
         }
         // Update Gaze counts
         var ray = new Ray(ViveCamera.transform.position, ViveCamera.transform.forward);
@@ -84,12 +101,10 @@ public class TouchGazeManager : MonoBehaviour {
             if (LayerMask.NameToLayer(lotusLayer) == hit.collider.gameObject.layer)
             {
                 lotusGazeInSeconds += Time.deltaTime;
-                PlayerPrefs.SetFloat("gazeLotus", lotusGazeInSeconds);
             }
             else if (LayerMask.NameToLayer(cubesLayer) == hit.collider.gameObject.layer)
             {
                 cubesGazeInSeconds += Time.deltaTime;
-                PlayerPrefs.SetFloat("gazeCubes", cubesGazeInSeconds);
             }
         }
         // Update Shader values
@@ -107,13 +122,11 @@ public class TouchGazeManager : MonoBehaviour {
     public void BankLotusTouchTime(float time)
     {
         lotusTouchInSeconds += time;
-        PlayerPrefs.SetFloat("touchLotus", lotusTouchInSeconds);
     }
 
     public void BankCubesTouchTime(float time)
     {
         cubesTouchInSeconds += time;
-        PlayerPrefs.SetFloat("touchCubes", cubesTouchInSeconds);
     }
 
     public float GetTime(InteractType interact)
@@ -129,12 +142,11 @@ public class TouchGazeManager : MonoBehaviour {
         return 0;
     }
 
-    public void SetTime(InteractType interact, float time)
+    public void AddTime(InteractType interact, float time)
     {
         if (interact == InteractType.CubesGaze)
         {
             cubesGazeInSeconds += time;
-            PlayerPrefs.SetFloat("gazeCubes", cubesGazeInSeconds);
         }
         else if (interact == InteractType.CubesTouch)
         {
@@ -143,7 +155,6 @@ public class TouchGazeManager : MonoBehaviour {
         else if (interact == InteractType.LotusGaze)
         {
             lotusGazeInSeconds += time;
-            PlayerPrefs.SetFloat("gazeLotus", lotusGazeInSeconds);
         }
         else if (interact == InteractType.LotusTouch)
         {
