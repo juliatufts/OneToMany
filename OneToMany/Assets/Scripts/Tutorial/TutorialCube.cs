@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using VRTK;
 
-public class TutorialSphere : MonoBehaviour {
+public class TutorialCube : MonoBehaviour {
 
     public float rotateSpeed = 90f;
     public float wobbleSpeed = 1f;

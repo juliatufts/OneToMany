@@ -43,6 +43,7 @@ public class CubeSpline : MonoBehaviour {
 
     public void IncreaseFlashCount(int index)
     {
+        // NULL REF!!
         cubeFlashCounts[index]++;
     }
 

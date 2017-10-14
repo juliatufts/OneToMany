@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.PostProcessing;
 
 public class SessionManager : MonoBehaviour {
 
@@ -14,6 +15,7 @@ public class SessionManager : MonoBehaviour {
 
     public static SessionManager Instance;
 
+    public PostProcessingProfile mainProfile;
     public float sessionDurationInMinutes = 1f;
     public Text sessionNumberText;
     public Text sessionStatusText;
@@ -42,17 +44,16 @@ public class SessionManager : MonoBehaviour {
         originalSkyboxColorPhase = RenderSettings.skybox.GetVector("_ColorPhase");
 
         //TODO: enter standby mode
-        RenderSettings.skybox.SetVector("_ColorPhase", new Vector4(
-                originalSkyboxColorPhase.x,
-                originalSkyboxColorPhase.y, 
-                originalSkyboxColorPhase.z, 
-                -0.3f)
-            );
+        var newSettings = mainProfile.vignette.settings;
+        newSettings.intensity = 0f;
+        mainProfile.vignette.settings = newSettings;
     }
 
     void OnDestroy()
     {
-        RenderSettings.skybox.SetVector("_ColorPhase", originalSkyboxColorPhase);
+        var newSettings = mainProfile.vignette.settings;
+        newSettings.intensity = 0f;
+        mainProfile.vignette.settings = newSettings;
     }
 	
 	void Update ()
@@ -92,8 +93,7 @@ public class SessionManager : MonoBehaviour {
 
     public void StartNewSession()
     {
-        //TODO: Set up for tutorial
-        StartCoroutine(FadeInSkybox());
+        StartCoroutine(BlinkTransition(0.1f, 0f));
 
         sessionStatus = SessionStatus.Tutorial;
         currentSessionProgressInSeconds = 0f;
@@ -109,24 +109,42 @@ public class SessionManager : MonoBehaviour {
         }
     }
 
-    IEnumerator FadeInSkybox()
+    IEnumerator BlinkTransition(float delta, float waitTime)
     {
-        var delta = 0.08f;
-        var colorPhase = RenderSettings.skybox.GetVector("_ColorPhase");
-        var w = colorPhase.w;
+        var progress = 0f;
+        VignetteModel.Settings newSettings;
 
-        while (w < originalSkyboxColorPhase.w)
+        while (progress < 1f)
         {
-            w += (delta * Time.deltaTime);
-            Debug.Log("w: " + w);
-            RenderSettings.skybox.SetVector("_ColorPhase", new Vector4(
-                originalSkyboxColorPhase.x,
-                originalSkyboxColorPhase.y,
-                originalSkyboxColorPhase.z,
-                w)
-            );
+            newSettings = mainProfile.vignette.settings;
+            newSettings.intensity = Mathf.Lerp(0f, 1f, progress);
+            mainProfile.vignette.settings = newSettings;
+
+            progress += (delta * Time.deltaTime);
             yield return new WaitForEndOfFrame();
         }
-        RenderSettings.skybox.SetVector("_ColorPhase", originalSkyboxColorPhase);
+
+        newSettings = mainProfile.vignette.settings;
+        newSettings.intensity = 1f;
+        mainProfile.vignette.settings = newSettings;
+        yield return new WaitForSeconds(waitTime);
+
+        // DO STUFF HERE
+        // maybe wait a minute
+
+        progress = 0f;
+        while (progress < 1f)
+        {
+            newSettings = mainProfile.vignette.settings;
+            newSettings.intensity = Mathf.Lerp(1f, 0f, progress);
+            mainProfile.vignette.settings = newSettings;
+
+            progress += (delta * Time.deltaTime);
+            yield return new WaitForEndOfFrame();
+        }
+
+        newSettings = mainProfile.vignette.settings;
+        newSettings.intensity = 0f;
+        mainProfile.vignette.settings = newSettings;
     }
 }
