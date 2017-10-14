@@ -1,16 +1,13 @@
 Shader "Camp Cult/Feedback/FeedbackFracture" {
 Properties {
+
+	_MainTex("MainTex", 2D) = "white" {}
 _Feedback ("Base (RGB)", 2D) = "white" {}
 }
-Category{
-Blend SrcAlpha OneMinusSrcAlpha
-Tags {"Queue" = "Transparent-1000"}
 SubShader {
 Pass {
-	ZWrite Off
-	ZTest Always
-	Cull Off
-	Fog{Mode Off}
+	ZTest Always Cull Off ZWrite Off
+	Fog{ Mode off }
 CGPROGRAM
 #include "UnityCG.cginc"
 #pragma vertex vert_img
@@ -21,6 +18,7 @@ uniform sampler2D _MainTex;
 uniform sampler2D _Feedback;
 uniform float4 _Feedback_ST;
 uniform float4 _Shape;
+uniform float4 _Size;
 uniform float4 _Feedback_TexelSize;
 /*
     A fracuring dynamical system
@@ -91,7 +89,7 @@ fixed4 frag(v2f_img i) : COLOR
 		i.uv.y = 1. - i.uv.y;
 	}
 float2 vUv = i.uv;// +_Feedback_TexelSize.xy*2.5;
-    float2 texel = _Feedback_TexelSize.xy*_Shape.zw;
+    float2 texel = _Feedback_TexelSize.xy*_Size.zw;
     
     float2 n  = float2(0.0, 1.0);
     float2 ne = float2(1.0, 1.0);
@@ -160,13 +158,13 @@ float2 vUv = i.uv;// +_Feedback_TexelSize.xy*2.5;
     du += 0.2 * m * normz(d)*_Mouse.z;
 
     du = length(du) > 1.0 ? normz(du) : du;
-	return  lerp(tex2D(_MainTex, i.uv), float4(du, dv), _Shape.x);
+	return  float4(lerp(tex2D(_MainTex, i.uv), float4(du, dv), _Shape.x).rgb, 1.);
     
 
 }
 ENDCG
 }
 }
-}
+
 FallBack "Unlit"
 }
