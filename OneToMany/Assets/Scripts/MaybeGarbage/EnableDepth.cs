@@ -17,16 +17,12 @@ public class EnableDepth : MonoBehaviour {
                 }
             }
         }
-
-        var camera = GetComponent<Camera>();
-        if(camera) {
-            camera.depthTextureMode |= DepthTextureMode.Depth;
-        }
     }
 
-    void OnPreRender() {
+    void OnPreCull() {
         var cam = GetComponent<Camera>();
         if(!cam) return;
+        cam.depthTextureMode |= DepthTextureMode.Depth;
         var mode = cam.depthTextureMode;
 
         if((mode & DepthTextureMode.DepthNormals) == DepthTextureMode.DepthNormals) {
