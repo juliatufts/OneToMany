@@ -21,18 +21,21 @@
 			<ShortName>Master</ShortName>
 			<Path>Master.bnk</Path>
 			<IncludedEvents>
-				<Event Id="1792046091" Name="Collision" ObjectPath="\Events\Default Work Unit\Collision"/>
-				<Event Id="2398939645" Name="Dunk" ObjectPath="\Events\Default Work Unit\Dunk"/>
-				<Event Id="652701381" Name="LotusHoleTouch" ObjectPath="\Events\Default Work Unit\LotusHoleTouch"/>
-				<Event Id="2547328439" Name="LotusTouch" ObjectPath="\Events\Default Work Unit\LotusTouch"/>
-				<Event Id="2228486476" Name="LotusTouch_2" ObjectPath="\Events\Default Work Unit\LotusTouch_2"/>
+				<Event Id="1792046091" Name="Collision" ObjectPath="\Events\Default Work Unit\Collision" MaxAttenuation="100.000000"/>
+				<Event Id="2396968165" Name="Ding" ObjectPath="\Events\Default Work Unit\Ding" MaxAttenuation="100.000000"/>
+				<Event Id="2398939645" Name="Dunk" ObjectPath="\Events\Default Work Unit\Dunk" MaxAttenuation="100.000000"/>
+				<Event Id="652701381" Name="LotusHoleTouch" ObjectPath="\Events\Default Work Unit\LotusHoleTouch" MaxAttenuation="100.000000"/>
+				<Event Id="1138121173" Name="LotusTouchStart" ObjectPath="\Events\Default Work Unit\LotusTouchStart" MaxAttenuation="100.000000"/>
 				<Event Id="4289927095" Name="LotusTouchStop" ObjectPath="\Events\Default Work Unit\LotusTouchStop" MaxAttenuation="0.000000"/>
-				<Event Id="3358606156" Name="LotusTouchStop_2" ObjectPath="\Events\Default Work Unit\LotusTouchStop_2" MaxAttenuation="0.000000"/>
 				<Event Id="1122283870" Name="MusicStart" ObjectPath="\Events\Music\MusicStart"/>
 				<Event Id="3978196478" Name="MusicStop" ObjectPath="\Events\Music\MusicStop" MaxAttenuation="0.000000"/>
-				<Event Id="469357355" Name="PianoHit" ObjectPath="\Events\Default Work Unit\PianoHit"/>
+				<Event Id="469357355" Name="PianoHit" ObjectPath="\Events\Default Work Unit\PianoHit" MaxAttenuation="100.000000"/>
 			</IncludedEvents>
 			<IncludedMemoryFiles>
+				<File Id="3431191" Language="SFX">
+					<ShortName>lotus_loop.wav</ShortName>
+					<Path>SFX\lotus_loop_F17FB28C.wem</Path>
+				</File>
 				<File Id="342341401" Language="SFX">
 					<ShortName>dunk.wav</ShortName>
 					<Path>SFX\dunk_1C9C67B2.wem</Path>

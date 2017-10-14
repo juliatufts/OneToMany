@@ -4,6 +4,14 @@ using UnityEngine;
 
 public class TouchGazeManager : MonoBehaviour {
 
+    public enum InteractType
+    {
+        LotusTouch,
+        LotusGaze,
+        CubesTouch,
+        CubesGaze
+    }
+
     public static TouchGazeManager Instance;
 
     public Camera ViveCamera;
@@ -53,15 +61,37 @@ public class TouchGazeManager : MonoBehaviour {
             Debug.LogError("More than one TouchGazeManager in scene");
         }
         Instance = this;
+        
 
-        lotusTouchInSeconds = 0f;
-        lotusGazeInSeconds = 0f;
-        cubesTouchInSeconds = 0f;
-        cubesGazeInSeconds = 0f;
+        lotusTouchInSeconds = PlayerPrefs.GetFloat("touchLotus");
+        lotusGazeInSeconds = PlayerPrefs.GetFloat("gazeLotus"); ;
+        cubesTouchInSeconds = PlayerPrefs.GetFloat("touchCubes"); ;
+        cubesGazeInSeconds = PlayerPrefs.GetFloat("gazeCubes"); ;
+    }
+
+    void OnDisable()
+    {
+        Save();
+    }
+
+    public void Save()
+    {
+        PlayerPrefs.SetFloat("gazeLotus", lotusGazeInSeconds);
+        PlayerPrefs.SetFloat("gazeCubes", cubesGazeInSeconds);
+        PlayerPrefs.SetFloat("touchLotus", lotusTouchInSeconds);
+        PlayerPrefs.SetFloat("touchCubes", cubesTouchInSeconds);
     }
 	
 	void Update ()
     {
+        if (Input.GetKeyDown(KeyCode.F5) && Input.GetKey(KeyCode.LeftShift))
+        {
+            lotusTouchInSeconds = lotusGazeInSeconds = cubesGazeInSeconds = cubesTouchInSeconds = 0;
+        }
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Save();
+        }
         // Update Gaze counts
         var ray = new Ray(ViveCamera.transform.position, ViveCamera.transform.forward);
         RaycastHit hit;
@@ -77,10 +107,17 @@ public class TouchGazeManager : MonoBehaviour {
                 cubesGazeInSeconds += Time.deltaTime;
             }
         }
-
         // Update Shader values
 
-	}
+    }
+
+    void OnSerializeNetworkView(BitStream stream)
+    {
+        stream.Serialize(ref lotusTouchInSeconds);
+        stream.Serialize(ref lotusGazeInSeconds);
+        stream.Serialize(ref cubesTouchInSeconds);
+        stream.Serialize(ref cubesGazeInSeconds);
+    }
 
     public void BankLotusTouchTime(float time)
     {
@@ -91,4 +128,38 @@ public class TouchGazeManager : MonoBehaviour {
     {
         cubesTouchInSeconds += time;
     }
+
+    public float GetTime(InteractType interact)
+    {
+        if (interact == InteractType.CubesGaze)
+            return cubesGazeInSeconds;
+        if (interact == InteractType.CubesTouch)
+            return cubesTouchInSeconds;
+        if (interact == InteractType.LotusGaze)
+            return lotusGazeInSeconds;
+        if (interact == InteractType.LotusTouch)
+            return lotusTouchInSeconds;
+        return 0;
+    }
+
+    public void AddTime(InteractType interact, float time)
+    {
+        if (interact == InteractType.CubesGaze)
+        {
+            cubesGazeInSeconds += time;
+        }
+        else if (interact == InteractType.CubesTouch)
+        {
+            BankCubesTouchTime(time);
+        }
+        else if (interact == InteractType.LotusGaze)
+        {
+            lotusGazeInSeconds += time;
+        }
+        else if (interact == InteractType.LotusTouch)
+        {
+            BankLotusTouchTime(time);
+        }
+    }
+
 }

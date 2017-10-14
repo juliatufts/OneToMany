@@ -5,6 +5,11 @@
 			<ChildrenList>
 				<MusicPlaylistContainer Name="Music" ID="{BEC293C5-2A79-49CC-9977-1517F078F7F1}" ShortID="582144825">
 					<ReferenceList>
+						<Reference Name="AttachableMixerInput">
+							<Custom>
+								<Effect Name="Auro Panner (Attached)" ID="{E9271B16-C0F6-4231-8D46-6477B582B19D}" ShortID="819239198" PluginName="AttachableMixerInput" CompanyID="263" PluginID="1102" PluginType="3"/>
+							</Custom>
+						</Reference>
 						<Reference Name="Conversion">
 							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{72AC22D2-3979-4F1E-8252-B73FE47FA11D}"/>
 						</Reference>
@@ -91,6 +96,14 @@
 							<PropertyList>
 								<Property Name="LoopCount" Type="int16" Value="0"/>
 							</PropertyList>
+							<ChildrenList>
+								<MusicPlaylistItem Name="" ID="{5E8BD21A-3EBD-4DC7-B86B-71C61C317163}" ShortID="8101483">
+									<PropertyList>
+										<Property Name="PlaylistItemType" Type="int16" Value="1"/>
+									</PropertyList>
+									<SegmentRef Name="Nocturne" ID="{75CDE10F-4525-4563-B8DD-C7E64625EFEA}"/>
+								</MusicPlaylistItem>
+							</ChildrenList>
 						</MusicPlaylistItem>
 					</Playlist>
 				</MusicPlaylistContainer>

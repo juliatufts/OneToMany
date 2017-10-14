@@ -9,13 +9,15 @@ public class LotusHoleController : MonoBehaviour {
 
     public LotusController lotus;
     public AnimationCurve onTouchRampUpCurve;
-    [Range(-2400, 2400)]
+    [Range(-24, 24)]
     public float pitch;
     public AK.Wwise.RTPC pitchRTPC;
-    public AK.Wwise.Event onTouch;
+    public AK.Wwise.Event ding;
+    public AK.Wwise.Event onTouchStart;
+    public AK.Wwise.Event onTouchEnd;
 
-	[Tooltip("Time since last touch must be above this in order for next touch to have OnTouch event fired.")]
-	public float onTouchCoolDownThreshold = 1f;
+    [Tooltip("Time since last touch must be above this in order for next touch to have OnTouch event fired.")]
+	public float onTouchCoolDownThreshold = 0.2f;
 
     [Tooltip("Used only for initializing the mesh")]
     public float rimAngleThreshold = 80f;
@@ -28,7 +30,6 @@ public class LotusHoleController : MonoBehaviour {
     public float totalTimeTouched;
 
     public delegate void OnStartTouch();
-    public OnStartTouch onStartTouch;
 
     public int SubmeshIndex { get; private set; }
     public float TouchIntensity { get; private set; }
@@ -42,13 +43,15 @@ public class LotusHoleController : MonoBehaviour {
         SubmeshIndex = value;
     }
 
-    void Awake() {
+    void Awake()
+    {
         var networkView = GetComponent<NetworkView>();
         networkView.observed = this;
     }
+
     void Start()
     {
-        pitch = Random.Range(-2400, 2400);
+        pitch = 100 * Random.Range(-24, 24);
         timeSinceLastTouch = onTouchCoolDownThreshold;
     }
 
@@ -74,14 +77,11 @@ public class LotusHoleController : MonoBehaviour {
 		{
 			if (timeSinceLastTouch > onTouchCoolDownThreshold)
 			{
-				if (onStartTouch != null)
-				{
-                    pitchRTPC.SetValue(gameObject, pitch);
-                    onTouch.Post(gameObject);
-                    onStartTouch();
-				}
+                pitchRTPC.SetValue(gameObject, pitch);
+                ding.Post(gameObject);
 			}
 
+            onTouchStart.Post(gameObject);
             touching = true;
             timeSinceLastTouch = 0;
             timeThisTouch = 0;
@@ -103,6 +103,7 @@ public class LotusHoleController : MonoBehaviour {
         if (other.transform.CompareTag("GameController"))
         {
             touching = false;
+            onTouchEnd.Post(gameObject);
         }
     }
 

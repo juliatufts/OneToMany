@@ -5,16 +5,8 @@
 			<ChildrenList>
 				<SoundBank Name="Master" ID="{7BD024BE-A4F8-4440-8950-090AAC609A75}">
 					<ObjectInclusionList>
-						<ObjectRef Name="PianoHit" ID="{14EF2903-C71B-4062-B07F-0D75BE354324}" WorkUnitID="{017F7DBC-B1D9-44D7-B7AF-513DFAA4978D}" Filter="7" Origin="Manual"/>
-						<ObjectRef Name="LotusHoleTouch" ID="{B7FFD75E-73FC-4132-A02B-66E26EE2BB1E}" WorkUnitID="{017F7DBC-B1D9-44D7-B7AF-513DFAA4978D}" Filter="7" Origin="Manual"/>
-						<ObjectRef Name="LotusTouchStop_2" ID="{E804F663-E71A-4582-855E-4243FAF30784}" WorkUnitID="{017F7DBC-B1D9-44D7-B7AF-513DFAA4978D}" Filter="7" Origin="Manual"/>
-						<ObjectRef Name="Collision" ID="{A7C8065F-0D09-4674-AB7A-F872057EA37B}" WorkUnitID="{017F7DBC-B1D9-44D7-B7AF-513DFAA4978D}" Filter="7" Origin="Manual"/>
-						<ObjectRef Name="LotusTouch" ID="{F630469F-340B-4848-B046-ECD641922695}" WorkUnitID="{017F7DBC-B1D9-44D7-B7AF-513DFAA4978D}" Filter="7" Origin="Manual"/>
-						<ObjectRef Name="LotusTouchStop" ID="{3942F49A-DB18-49CC-BF07-D749CB86CEEB}" WorkUnitID="{017F7DBC-B1D9-44D7-B7AF-513DFAA4978D}" Filter="7" Origin="Manual"/>
-						<ObjectRef Name="LotusTouch_2" ID="{11E7D3A7-02C9-4A09-AEA7-ABAB45283897}" WorkUnitID="{017F7DBC-B1D9-44D7-B7AF-513DFAA4978D}" Filter="7" Origin="Manual"/>
-						<ObjectRef Name="MusicStart" ID="{36F7713B-390A-4B6A-8A0C-4053FA05EAA4}" WorkUnitID="{58AA1E08-1A4D-4ED8-892C-4A53C44D5D20}" Filter="7" Origin="Manual"/>
-						<ObjectRef Name="Dunk" ID="{BD63ADD4-6AC8-4D86-A531-9F844F4B90C1}" WorkUnitID="{017F7DBC-B1D9-44D7-B7AF-513DFAA4978D}" Filter="7" Origin="Manual"/>
-						<ObjectRef Name="MusicStop" ID="{EC2CF70B-CD5C-4F59-92A4-58CBE91CF012}" WorkUnitID="{58AA1E08-1A4D-4ED8-892C-4A53C44D5D20}" Filter="7" Origin="Manual"/>
+						<ObjectRef Name="Default Work Unit" ID="{914E970B-A475-40B7-A4C3-112997025B47}" WorkUnitID="{914E970B-A475-40B7-A4C3-112997025B47}" Filter="7" Origin="Manual"/>
+						<ObjectRef Name="Default Work Unit" ID="{ED47D36C-4990-4BF8-9DA7-902D95EB178F}" WorkUnitID="{ED47D36C-4990-4BF8-9DA7-902D95EB178F}" Filter="7" Origin="Manual"/>
 					</ObjectInclusionList>
 					<ObjectExclusionList/>
 					<GameSyncExclusionList/>
